@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_main"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="#000000"
+            app:tabIndicatorColor="@color/purple_200"
+            android:layout_marginTop="50dp"
+            >
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ic_btn_bottom_tab"
+            android:layout_below="@id/tl_main"
+            />
+-->
+
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ic_btn_bottom_tab"
+            android:layout_marginTop="50dp">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <include
+            android:id="@+id/ic_header_bar"
+            layout="@layout/header_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- 푸터 -->
+        <include
+            android:id="@+id/ic_btn_bottom_tab"
+            layout="@layout/bottom_tab"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"/>
+        <!-- 푸터 -->
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
