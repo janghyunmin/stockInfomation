@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.osj.stockinfomation.Adapter.VpAdapterMain;
@@ -25,6 +26,10 @@ public class MainActivity extends BaseActivity {
 
     ActivityMainBinding binding;
     private VpAdapterMain adapter;
+    // 마지막으로 뒤로가기 버튼을 눌렀던 시간 저장
+    private long backKeyPressedTime = 0;
+    // 첫 번째 뒤로가기 버튼을 누를때 표시
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,110 +75,55 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    View.OnClickListener listener1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            binding.vpMain.setCurrentItem(0);
+            bottomTabSelect(0);
+        }
+    };
+
+    View.OnClickListener listener2 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            binding.vpMain.setCurrentItem(1);
+            bottomTabSelect(1);
+        }
+    };
+
+    View.OnClickListener listener3 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            binding.vpMain.setCurrentItem(2);
+            bottomTabSelect(2);
+        }
+    };
+
+    View.OnClickListener listener4 = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            binding.vpMain.setCurrentItem(3);
+            bottomTabSelect(3);
+        }
+    };
+
     private void initClickEvent(){
-        binding.icBtnBottomTab.llBottomTab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(0);
-                bottomTabSelect(0);
-            }
-        });
+        binding.icBtnBottomTab.llBottomTab1.setOnClickListener(listener1);
+        binding.icBtnBottomTab.btnBottomTab1.setOnClickListener(listener1);
+        binding.icBtnBottomTab.txtBottomTab1.setOnClickListener(listener1);
+        binding.icHeaderBar.ivHeaderLogo.setOnClickListener(listener1);
 
-        binding.icBtnBottomTab.btnBottomTab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(0);
-                bottomTabSelect(0);
-            }
-        });
+        binding.icBtnBottomTab.llBottomTab2.setOnClickListener(listener2);
+        binding.icBtnBottomTab.btnBottomTab2.setOnClickListener(listener2);
+        binding.icBtnBottomTab.txtBottomTab2.setOnClickListener(listener2);
 
-        binding.icBtnBottomTab.txtBottomTab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(0);
-                bottomTabSelect(0);
-            }
-        });
+        binding.icBtnBottomTab.llBottomTab3.setOnClickListener(listener3);
+        binding.icBtnBottomTab.btnBottomTab3.setOnClickListener(listener3);
+        binding.icBtnBottomTab.txtBottomTab3.setOnClickListener(listener3);
 
-        binding.icBtnBottomTab.llBottomTab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(1);
-                bottomTabSelect(1);
-            }
-        });
-
-        binding.icBtnBottomTab.btnBottomTab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(1);
-                bottomTabSelect(1);
-            }
-        });
-
-        binding.icBtnBottomTab.txtBottomTab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(1);
-                bottomTabSelect(1);
-            }
-        });
-
-        binding.icBtnBottomTab.llBottomTab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(2);
-                bottomTabSelect(2);
-            }
-        });
-
-        binding.icBtnBottomTab.btnBottomTab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(2);
-                bottomTabSelect(2);
-            }
-        });
-
-        binding.icBtnBottomTab.txtBottomTab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(2);
-                bottomTabSelect(2);
-            }
-        });
-
-        binding.icBtnBottomTab.llBottomTab4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(3);
-                bottomTabSelect(3);
-            }
-        });
-
-        binding.icBtnBottomTab.btnBottomTab4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(3);
-                bottomTabSelect(3);
-            }
-        });
-
-        binding.icBtnBottomTab.txtBottomTab4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(3);
-                bottomTabSelect(3);
-            }
-        });
-
-        binding.icHeaderBar.ivHeaderLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.vpMain.setCurrentItem(0);
-
-            }
-        });
+        binding.icBtnBottomTab.llBottomTab4.setOnClickListener(listener4);
+        binding.icBtnBottomTab.btnBottomTab4.setOnClickListener(listener4);
+        binding.icBtnBottomTab.txtBottomTab4.setOnClickListener(listener4);
 
         //검색 온오프
         binding.icHeaderBar.btnHeaderSearchOn.setOnClickListener(new View.OnClickListener() {
@@ -224,67 +174,50 @@ public class MainActivity extends BaseActivity {
     }
 
     private void bottomTabSelect(int position){
+        binding.icBtnBottomTab.btnBottomTab1.setBackgroundResource(R.drawable.img_bottom1);
+        binding.icBtnBottomTab.btnBottomTab2.setBackgroundResource(R.drawable.img_bottom2);
+        binding.icBtnBottomTab.btnBottomTab3.setBackgroundResource(R.drawable.img_bottom3);
+        binding.icBtnBottomTab.btnBottomTab4.setBackgroundResource(R.drawable.img_bottom3);
+
+        binding.icBtnBottomTab.txtBottomTab1.setTextColor(Color.parseColor("#000000"));
+        binding.icBtnBottomTab.txtBottomTab2.setTextColor(Color.parseColor("#000000"));
+        binding.icBtnBottomTab.txtBottomTab3.setTextColor(Color.parseColor("#000000"));
+        binding.icBtnBottomTab.txtBottomTab4.setTextColor(Color.parseColor("#000000"));
+
         switch (position){
             case 0:
                 binding.icBtnBottomTab.btnBottomTab1.setBackgroundResource(R.drawable.img_bottom1_on);
-                binding.icBtnBottomTab.btnBottomTab2.setBackgroundResource(R.drawable.img_bottom2);
-                binding.icBtnBottomTab.btnBottomTab3.setBackgroundResource(R.drawable.img_bottom3);
-                binding.icBtnBottomTab.btnBottomTab4.setBackgroundResource(R.drawable.img_bottom4);
-
                 binding.icBtnBottomTab.txtBottomTab1.setTextColor(Color.parseColor("#C50000"));
-                binding.icBtnBottomTab.txtBottomTab2.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab3.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab4.setTextColor(Color.parseColor("#000000"));
                 break;
             case 1:
-                binding.icBtnBottomTab.btnBottomTab1.setBackgroundResource(R.drawable.img_bottom1);
                 binding.icBtnBottomTab.btnBottomTab2.setBackgroundResource(R.drawable.img_bottom2_on);
-                binding.icBtnBottomTab.btnBottomTab3.setBackgroundResource(R.drawable.img_bottom3);
-                binding.icBtnBottomTab.btnBottomTab4.setBackgroundResource(R.drawable.img_bottom4);
-
-                binding.icBtnBottomTab.txtBottomTab1.setTextColor(Color.parseColor("#000000"));
                 binding.icBtnBottomTab.txtBottomTab2.setTextColor(Color.parseColor("#C50000"));
-                binding.icBtnBottomTab.txtBottomTab3.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab4.setTextColor(Color.parseColor("#000000"));
                 break;
             case 2:
-                binding.icBtnBottomTab.btnBottomTab1.setBackgroundResource(R.drawable.img_bottom1);
-                binding.icBtnBottomTab.btnBottomTab2.setBackgroundResource(R.drawable.img_bottom2);
                 binding.icBtnBottomTab.btnBottomTab3.setBackgroundResource(R.drawable.img_bottom3_on);
-                binding.icBtnBottomTab.btnBottomTab4.setBackgroundResource(R.drawable.img_bottom4);
-
-                binding.icBtnBottomTab.txtBottomTab1.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab2.setTextColor(Color.parseColor("#000000"));
                 binding.icBtnBottomTab.txtBottomTab3.setTextColor(Color.parseColor("#C50000"));
-                binding.icBtnBottomTab.txtBottomTab4.setTextColor(Color.parseColor("#000000"));
                 break;
             case 3:
-                binding.icBtnBottomTab.btnBottomTab1.setBackgroundResource(R.drawable.img_bottom1);
-                binding.icBtnBottomTab.btnBottomTab2.setBackgroundResource(R.drawable.img_bottom2);
-                binding.icBtnBottomTab.btnBottomTab3.setBackgroundResource(R.drawable.img_bottom3);
                 binding.icBtnBottomTab.btnBottomTab4.setBackgroundResource(R.drawable.img_bottom4_on);
-
-                binding.icBtnBottomTab.txtBottomTab1.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab2.setTextColor(Color.parseColor("#000000"));
-                binding.icBtnBottomTab.txtBottomTab3.setTextColor(Color.parseColor("#000000"));
                 binding.icBtnBottomTab.txtBottomTab4.setTextColor(Color.parseColor("#C50000"));
                 break;
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 백버튼 클릭
+     */
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis();
+            toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finish();
+            toast.cancel();
+        }
+    }
 }
