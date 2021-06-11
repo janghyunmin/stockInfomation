@@ -61,7 +61,8 @@ public class AdapterPushList extends NsBaseRecyclerViewAdapter<AdapterPushList.I
             holder.iv_my_fav_close.setTag(position);
             holder.ll_my_fav_close.setTag(position);
 
-            holder.iv_my_fav_close.setVisibility(View.GONE);
+            if(type.equals("notice"))
+                holder.ll_my_fav_close.setVisibility(View.GONE);
 
             holder.txt_my_fav_title.setText(item.getPuSubject());
 

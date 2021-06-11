@@ -68,7 +68,6 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d("osj", "receive");
 //        if (PreferencesUtil.getBoolean(getApplicationContext(), PreferencesUtil.PreferenceKey.PREF_PUSH_NEW)) {//푸시 동의 시
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 sendNotificationChannel(getApplicationContext(), remoteMessage);
@@ -82,7 +81,6 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNotificationChannel(Context context, RemoteMessage remoteMessage)
     {
-        Log.d("osj", "receive1");
         int importance = NotificationManager.IMPORTANCE_HIGH;
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -91,14 +89,12 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, importance);
         channel.setDescription(NOTIFICATION_CHANNEL_ID);
 
-        Log.d("osj", "receive2");
         mNotificationManager.createNotificationChannel(channel);
         payload = new PushPayloadDAO(remoteMessage);
 
         Intent intent = null;
         if(!((BaseApplication) getApplication()).isMainActivityLive())
         {
-            Log.d("osj", "receive3");
             intent = new Intent(context, SplashActivity.class);
             intent.putExtra(C.PUSH_PAYLOAD, payload);
             intent.setAction(Long.toString(System.currentTimeMillis()));
@@ -115,18 +111,14 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         }
         else
         {
-            Log.d("osj", "receive4");
             mBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(payload.getTitle())
                     .setContentText(payload.getContents())
                     .setAutoCancel(true);
 
-        Log.d("osj", "payload  :: " + payload.toString());
-            Log.d("osj", "payload link :: " + payload.getLinkUrl());
-
             try {
-                if(payload.getLinkUrl().length() >= 8){
+//                if(payload.getLinkUrl().length() >= 8){
                     intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    intent.putExtra(C.PUSH_PAYLOAD,payload.getLinkUrl());
@@ -134,7 +126,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
                     intent.putExtra(C.PUSH_PAYLOAD, payload);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
                     mBuilder.setContentIntent(pendingIntent);
-                }
+//                }
             } catch (Exception e){
                 Log.d("osj", "Exception e :: " + e);
             }
