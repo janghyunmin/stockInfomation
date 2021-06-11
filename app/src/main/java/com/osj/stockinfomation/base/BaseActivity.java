@@ -1,22 +1,24 @@
 package com.osj.stockinfomation.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.osj.stockinfomation.R;
-import com.osj.stockinfomation.databinding.ActivityMainBinding;
 
 public class BaseActivity extends AppCompatActivity {
+
+    ProgressBar progress;
 
     public interface OnClickListener {
         void onClick();
@@ -29,6 +31,20 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public void setProgress(ProgressBar progress){
+        this.progress = progress;
+    }
+
+    public void showProgress(){
+        if(progress != null)
+            progress.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress(){
+        if(progress != null)
+            progress.setVisibility(View.GONE);
     }
 
     /*
@@ -70,7 +86,10 @@ public class BaseActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         final AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
 
         if(!title.isEmpty())
             ((TextView)alertDialog.findViewById(R.id.txt_dialog_title)).setText(title);
@@ -132,5 +151,37 @@ public class BaseActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    protected void showPermisstionCustomAlert(Context mContext, OnCancelListener cancelListener, OnClickListener clickListener){
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_permisstion, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(dialogView);
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        ((Button)alertDialog.findViewById(R.id.btn_dialog_ok)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickListener != null){
+                    clickListener.onClick();
+                }
+                alertDialog.dismiss();
+            }
+        });
+
+        ((Button)alertDialog.findViewById(R.id.btn_dialog_cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(cancelListener != null){
+                    cancelListener.onClick();
+                }
+                alertDialog.dismiss();
+            }
+        });
     }
 }

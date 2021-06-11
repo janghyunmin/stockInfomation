@@ -19,11 +19,20 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#10000000"
+        android:layout_below="@id/tl_first">
+
+    </View>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_first"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tl_first"
+        android:layout_below="@id/line2"
         />
 
 </RelativeLayout>

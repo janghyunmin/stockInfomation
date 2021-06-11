@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        android:background="@null"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/intro_login_btn_shape">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="120dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/img_header_logo"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="무료종목 추천 더 받기"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/iv1"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:id="@+id/edt_dialog_main_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt1"
+                android:hint="성함을 입력해주세요."
+                android:background="@drawable/intro_login_btn_shape2"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                android:nextFocusDown="@id/edt_dialog_main_phone"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
+                android:inputType="text">
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/edt_dialog_main_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_dialog_main_name"
+                android:background="@drawable/intro_login_btn_shape2"
+                android:hint="연락처를 입력해주세요.(숫자만)"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:imeOptions="actionDone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_main1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/edt_dialog_main_phone"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:background="@drawable/intro_login_btn_shape3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_main_pi_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_dialog_main_all_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/img_pi_check_off"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체 동의하기"
+                        android:layout_toRightOf="@+id/iv_dialog_main_all_check"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#000000"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+                    txt_dialog_main_1
+                    <ImageView
+                        android:id="@+id/iv_dialog_main_check1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/img_pi_check1_off"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_check1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="개인정보처리방침 동의하기(필수)"
+                        android:textColor="#888888"
+                        android:layout_toRightOf="@+id/iv_dialog_main_check1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="보기"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_dialog_main_check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/img_pi_check1_off"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제3자 마케팅활용 동의하기(필수)"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/iv_dialog_main_check2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="보기"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_dialog_main_check3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/img_pi_check1_off"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_check3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="메시지 수신 약관 동의하기(필수)"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/iv_dialog_main_check3"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="보기"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                >
+
+                <Button
+                    android:id="@+id/btn_dialog_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_dialog_cancel_bg"
+                    android:layout_weight="1"
+                    android:text="취소"
+                    android:textColor="#000000"
+                    >
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_dialog_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_dialog_ok_bg"
+                    android:layout_weight="1"
+                    android:text="확인"
+                    android:textColor="#ffffff">
+
+                </Button>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

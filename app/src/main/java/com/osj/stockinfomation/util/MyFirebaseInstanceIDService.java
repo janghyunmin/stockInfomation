@@ -68,7 +68,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-//        Log.d("osj", "receive");
+        Log.d("osj", "receive");
 //        if (PreferencesUtil.getBoolean(getApplicationContext(), PreferencesUtil.PreferenceKey.PREF_PUSH_NEW)) {//푸시 동의 시
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 sendNotificationChannel(getApplicationContext(), remoteMessage);
@@ -82,6 +82,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNotificationChannel(Context context, RemoteMessage remoteMessage)
     {
+        Log.d("osj", "receive1");
         int importance = NotificationManager.IMPORTANCE_HIGH;
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -90,12 +91,14 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, importance);
         channel.setDescription(NOTIFICATION_CHANNEL_ID);
 
+        Log.d("osj", "receive2");
         mNotificationManager.createNotificationChannel(channel);
         payload = new PushPayloadDAO(remoteMessage);
 
         Intent intent = null;
         if(!((BaseApplication) getApplication()).isMainActivityLive())
         {
+            Log.d("osj", "receive3");
             intent = new Intent(context, SplashActivity.class);
             intent.putExtra(C.PUSH_PAYLOAD, payload);
             intent.setAction(Long.toString(System.currentTimeMillis()));
@@ -112,6 +115,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         }
         else
         {
+            Log.d("osj", "receive4");
             mBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(payload.getTitle())

@@ -15,30 +15,23 @@ Copyright ⓒ2020 LGCNS All right reserved
 ============================================================*
 Ver   DateAuthor    Descrition*
 ============================================================*
-1.0   2020.5.15.    오승진최초프로그램작성*
+1.0   2020.5.15.    오승진 최초프로그램작성*
 ============================================================*/
 
 public class PreferencesUtil {
   public static class PreferenceKey {
 
-    public static final String PREF_UUID = "uuid";                                          // UUID
     public static final String PREF_TOKEN = "token";                                        // 푸시 토큰
-    public static final String PREF_LG_AGENT_NOT_INSTALL = "not_install";                   // LG U+ 에이전트 설치 여부
-    public static final String PREF_PHONE_NUM = "phone_num";                                        // 푸시 토큰
-    public static final String PREF_SIM_NUM = "sim_num";                                        // 푸시 토큰
 
     public static final String PUSH_MESSAGE_AGREE = "push_message_agree";                   // 푸시 수신 여부
     public static final String PUSH_MESSAGE_DIALOG = "push_message_dialog";                 // 푸시 다이얼로그 유무
     public static final String MKT_MESSAGE_AGREE = "mkt_message_agree";                     // 마케팅 수신 여부
     public static final String MKT_MESSAGE_DIALOG = "mkt_message_dialog";                   // 마케팃 다이얼로그 유무
 
-    public static final String MD_ID = "MD_ID";                   // 생체인증 로그인 여부
-    public static final String AUTO_LOGIN = "AUTO_LOGIN";                   // 생체인증 로그인 여부
-    public static final String MD_PW = "MD_PW";                   // 생체인증 로그인 여부
-    public static final String PREF_PERMISSION_INFO = "PREF_PERMISSION_INFO";                                          // UUID
+    public static final String PREF_PERMISSION_INFO = "PREF_PERMISSION_INFO";
+
+
     public static final String LINK = "link";
-    public static final String BIO_LOGIN_ID = "bio_login_id";                   // 생체인증 로그인 아이디
-    public static final String BIO_LOGIN_PW = "bio_login_pw";                   // 생체인증 로그인 패스워드
   }
 
   /**

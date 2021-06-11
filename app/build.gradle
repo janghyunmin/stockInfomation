@@ -12,7 +12,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,6 +38,11 @@ android {
     }
 
     useLibrary 'org.apache.http.legacy'
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -71,4 +76,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.annimon:stream:1.1.7'
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // swipyRefreshLayout
+    api 'com.github.orangegangsters:swipy:1.2.3@aar'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    implementation 'org.greenrobot:eventbus:3.2.0'
 }

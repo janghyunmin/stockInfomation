@@ -4,15 +4,223 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rl_setting"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffff"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_setting_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/img_back"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="설정"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e5e5e5"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="계정설정"
+                        android:background="#f2f3f6"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="프로필 수정하기"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="서비스 이용 정책"
+                        android:background="#f2f3f6"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_webview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="서비스 이용 약관"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_webview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="개인정보 보호정책"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_webview3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="메시지 수신 약관"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="알림설정"
+                        android:background="#f2f3f6"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_alram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="알림 설정하기"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="앱 정보"
+                        android:background="#f2f3f6"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                    <TextView
+                        android:id="@+id/txt_setting_version"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="버젼정보 1.0.1"
+                        android:background="#ffffff"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e5e5e5"/>
+
+                </LinearLayout>
 
 
+
+            </ScrollView>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
     </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

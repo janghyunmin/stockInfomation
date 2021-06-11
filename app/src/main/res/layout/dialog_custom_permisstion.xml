@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:background="@drawable/intro_login_btn_shape"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_dialog_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/img_alert_error"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txt_dialog_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#000000"
+                    android:text="접근 권한허용(필수)"
+                    >
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/txt_dialog_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#000000"
+                    android:text="정보 통신망법 개정에 따른\n고수의 급등주는 서비스에 꼭 필요한\n항목 필수접근하고 있습니다.">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:text="저장공간">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:text="(기사, 영상, 문자메시로 주고 받는 데이터\n및 파일 등을 읽고 저장)">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_dialog_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_dialog_cancel_bg"
+                    android:layout_weight="1"
+                    android:text="나가기"
+                    android:textColor="#000000"
+                    >
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_dialog_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_dialog_ok_bg"
+                    android:layout_weight="1"
+                    android:text="허용하기"
+                    android:textColor="#ffffff">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

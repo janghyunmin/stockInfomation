@@ -45,12 +45,42 @@
 
         </androidx.viewpager.widget.ViewPager>
 
+
+
         <include
             android:id="@+id/ic_header_bar"
             layout="@layout/header_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <!-- 푸터 -->
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#10000000"
+            android:layout_below="@id/ic_header_bar">
+
+        </View>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#10000000"
+            android:layout_above="@id/ic_btn_bottom_tab">
+
+        </View>
+
+        <Button
+            android:id="@+id/btn_pi"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/img_free"
+            android:layout_above="@+id/ic_btn_bottom_tab"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+
         <include
             android:id="@+id/ic_btn_bottom_tab"
             layout="@layout/bottom_tab"

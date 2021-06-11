@@ -11,6 +11,9 @@ import retrofit2.Response;
 
 public class NSCallback<T> implements Callback<T> {
 
+    public interface OnBackPressedListener {
+        void onBackPressed();
+    }
 
     private SingleObjectCallback<T> mCallback;
 

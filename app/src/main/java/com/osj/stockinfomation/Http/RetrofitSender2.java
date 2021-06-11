@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.osj.stockinfomation.C.C;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -15,24 +16,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-/**
- * 2018-05-15 SJH, NomadSoft.Inc
- * RetrofitSender 그 2탄.
- */
 public class RetrofitSender2 {
 
     /* real */
-    public static String BASE_URL = "http://183.111.125.16:16162";//"http://218.54.201.175:16162";//"http://192.168.0.135:16500";//"http://13.209.3.226:80";//"http://192.168.0.59:16151";//"http://218.234.17.221:16132";
-    public static String MATCHING_SERVER_URL = "http://nomad1505.iptime.org:16113";//"http://192.168.0.110:16113";//
-    public static String URL_IMG_BASE = "http://183.111.125.16:8080";//"http://218.54.201.175:8080";//"http://218.234.17.221:16174/";//"http://218.234.17.221:16134/";//"http://61.98.231.98:15015/";//"http://192.168.0.162:15015/";
-
-    /* dev */
-//    public static String BASE_URL = "http://work.igrev.kr:20002";
-//    public static String URL_IMG_BASE = "http://work.igrev.kr:20001";
-
-    /* local */
-//    public static String BASE_URL = "http://192.168.10.1:16162";
-//    public static String URL_IMG_BASE = "http://192.168.10.1:8080";
+    public static String BASE_URL = C.BASE_URL;
+    public static String URL_IMG_BASE = "http://183.111.125.16:8080";;
 
     private static Retrofit retrofit = null;
 
