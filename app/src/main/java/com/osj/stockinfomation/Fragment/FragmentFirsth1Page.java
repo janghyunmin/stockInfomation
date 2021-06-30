@@ -1,6 +1,7 @@
 package com.osj.stockinfomation.Fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,6 +87,19 @@ public class FragmentFirsth1Page extends BaseFragment {
         initView(view);
         setEvent();
         loadData(true);
+
+        try {
+            if(EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+                EventBus.getDefault().register(this);
+            } else {
+                EventBus.getDefault().register(this);
+            }
+
+            Log.d("osj", "FragmentFirsth1Page onCreateView");
+        } catch (Exception e){
+
+        }
         return view;
     }
 
@@ -148,6 +163,7 @@ public class FragmentFirsth1Page extends BaseFragment {
                 public void onClick(View view) {
                     swipeRefreshLayout.setVisibility(View.VISIBLE);
                     rl_first1_page.setVisibility(View.GONE);
+                    C.backIndex = false;
                 }
             });
         } catch (Exception e) {
@@ -168,18 +184,17 @@ public class FragmentFirsth1Page extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        try {
-            EventBus.getDefault().register(this);
-        } catch (Exception e){
 
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
         if(event.position == 11){
             Log.d("osj", "first1page load date");
-            loadData(true);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+//            loadData(true);
+
         }
     }
 
@@ -264,6 +279,9 @@ public class FragmentFirsth1Page extends BaseFragment {
                             }
                         });
                         recyclerView.setAdapter(adapterMainContentList);
+
+                        recyclerView.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                     } else {
                         adapterMainContentList.addAll(result.getList());
                         adapterMainContentList.notifyDataSetChanged();

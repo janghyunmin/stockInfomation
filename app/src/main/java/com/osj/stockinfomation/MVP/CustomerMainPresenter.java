@@ -243,9 +243,9 @@ public class CustomerMainPresenter {
         }
     }
 
-    public void getCategory02(String ca_id, final CommonCallback.SingleObjectCallback<SpotUpDAOCategory2> callback) {
+    public void getCategory02(String ca_id, String code, final CommonCallback.SingleObjectCallback<SpotUpDAOCategory2> callback) {
         try{
-            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCategory02(ca_id).enqueue(new NSCallback<SpotUpDAOCategory2>(new NSCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCategory02(ca_id, code).enqueue(new NSCallback<SpotUpDAOCategory2>(new NSCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
                 @Override
                 public void onSuccess(SpotUpDAOCategory2 result) {
 
@@ -267,9 +267,9 @@ public class CustomerMainPresenter {
         }
     }
 
-    public void getCategory03(Activity activity, String ca_id, final CommonCallback.SingleObjectCallback<SpotUpDAOCategory3> callback) {
+    public void getCategory03(Activity activity, String ca_id, String code, final CommonCallback.SingleObjectCallback<SpotUpDAOCategory3> callback) {
         try{
-            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCategory03(Util_osj.getAndroidId(activity), ca_id).enqueue(new NSCallback<SpotUpDAOCategory3>(new NSCallback.SingleObjectCallback<SpotUpDAOCategory3>() {
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCategory03(Util_osj.getAndroidId(activity), ca_id, code).enqueue(new NSCallback<SpotUpDAOCategory3>(new NSCallback.SingleObjectCallback<SpotUpDAOCategory3>() {
                 @Override
                 public void onSuccess(SpotUpDAOCategory3 result) {
 

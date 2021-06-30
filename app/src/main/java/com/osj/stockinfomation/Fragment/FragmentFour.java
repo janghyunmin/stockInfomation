@@ -42,8 +42,13 @@ import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.base.BaseFragment;
 import com.osj.stockinfomation.util.ErrorController;
 import com.osj.stockinfomation.util.HTMLTextView;
+import com.osj.stockinfomation.util.MessageEvent;
 import com.osj.stockinfomation.util.PagingUtil;
 import com.osj.stockinfomation.util.RecyclerDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class FragmentFour extends BaseFragment {
 
@@ -154,6 +159,7 @@ public class FragmentFour extends BaseFragment {
                 public void onClick(View view) {
                     rl_fragment4.setVisibility(View.VISIBLE);
                     rl_fragment4_list.setVisibility(View.GONE);
+                    C.backIndex = false;
                 }
             });
 
@@ -267,6 +273,7 @@ public class FragmentFour extends BaseFragment {
         btn_push.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                C.backIndex = false;
                 alertDialog.dismiss();
             }
         });
@@ -274,6 +281,7 @@ public class FragmentFour extends BaseFragment {
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
+                C.backIndex = false;
                 alertDialog = null;
             }
         });
@@ -305,5 +313,42 @@ public class FragmentFour extends BaseFragment {
                 }
             }, 100);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            EventBus.getDefault().unregister(this);
+        } catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            EventBus.getDefault().unregister(this);
+        } catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            EventBus.getDefault().register(this);
+        } catch (Exception e){
+
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event){
+        rl_fragment4.setVisibility(View.VISIBLE);
+        rl_fragment4_list.setVisibility(View.GONE);
+        C.backIndex = false;
     }
 }

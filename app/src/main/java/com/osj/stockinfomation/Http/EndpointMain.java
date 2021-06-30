@@ -109,12 +109,14 @@ public interface EndpointMain {
 
     @FormUrlEncoded
     @POST("/api/get_category02.php")
-    Call<SpotUpDAOCategory2> getCategory02(@Field("ca_id") String ca_id);
+    Call<SpotUpDAOCategory2> getCategory02(@Field("ca_id") String ca_id,
+                                           @Field("code") String code);
 
     @FormUrlEncoded
     @POST("/api/get_category03.php")
     Call<SpotUpDAOCategory3> getCategory03(@Field("mb_id") String mb_id,
-                                           @Field("ca_id2") String ca_id);
+                                           @Field("ca_id2") String ca_id,
+                                           @Field("code") String code);
 
     @FormUrlEncoded
     @POST("/api/set_like.php")

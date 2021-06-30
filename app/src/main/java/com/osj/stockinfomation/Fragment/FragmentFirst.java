@@ -3,6 +3,7 @@ package com.osj.stockinfomation.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +39,6 @@ public class FragmentFirst extends BaseFragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-
-
     public FragmentFirst(Activity activity){
         this.activity = activity;
     }
@@ -52,6 +51,23 @@ public class FragmentFirst extends BaseFragment {
         initView(view);
         setEvent();
         loadData(true);
+        try {
+            if(((MainActivity) getActivity()).payload != null) {
+                if (((MainActivity) getActivity()).payload.getLinkUrl().equals("page1-1")) {
+                    viewPager.setCurrentItem(0);
+                } else if (((MainActivity) getActivity()).payload.getLinkUrl().equals("page1-2")) {
+                    viewPager.setCurrentItem(1);
+                } else if (((MainActivity) getActivity()).payload.getLinkUrl().equals("page1-3")) {
+                    viewPager.setCurrentItem(2);
+                } else if (((MainActivity) getActivity()).payload.getLinkUrl().equals("page1-4")) {
+                    viewPager.setCurrentItem(3);
+                }
+            }
+        } catch (Exception e){
+            showCustomAlert(activity, "",
+                    "푸시 데이터가 정상적이지 않습니다.", true, R.drawable.img_alert_error, 1, "", "", null, null);
+        }
+
         return view;
     }
 
@@ -109,7 +125,20 @@ public class FragmentFirst extends BaseFragment {
     public void onMessageEvent(MessageEvent event){
         if(event.position == 0){
             EventBus.getDefault().post(new MessageEvent(11));
-            viewPager.setCurrentItem(event.position);
+////            new Handler().postDelayed(new Runnable() {
+////                @Override
+////                public void run() {
+//                    viewPager.setCurrentItem(event.position + 2);
+////                }
+////            }, 1000);
+//
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+                    viewPager.setCurrentItem(event.position);
+//                }
+//            }, 100);
+
         }
     }
 

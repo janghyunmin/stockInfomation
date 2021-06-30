@@ -150,41 +150,6 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
-                        android:id="@+id/iv_dialog_main_check2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/img_pi_check1_off"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/txt_dialog_main_check2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="제3자 마케팅활용 동의하기(필수)"
-                        android:textColor="#888888"
-                        android:textSize="12sp"
-                        android:layout_toRightOf="@+id/iv_dialog_main_check2"
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/txt_dialog_main_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="보기"
-                        android:textColor="#888888"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
                         android:id="@+id/iv_dialog_main_check3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -214,7 +179,40 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
+                    <ImageView
+                        android:id="@+id/iv_dialog_main_check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/img_pi_check1_off"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제3자 마케팅활용 동의하기(필수)"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/iv_dialog_main_check2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/txt_dialog_main_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="보기"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 

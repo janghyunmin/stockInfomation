@@ -1,6 +1,7 @@
 package com.osj.stockinfomation.Adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,37 @@ public class AdapterCategoryLikeFavContentList extends NsBaseRecyclerViewAdapter
 
             holder.txt_spot_content_title.setText(item.getCodeName());
 
-            DecimalFormat df2 = new DecimalFormat("#,##0");
-            holder.txt_spot_content_price.setText(df2.format(Integer.parseInt(item.getDisplayedPrice())));
-            holder.txt_spot_content_per.setText(item.getPer().toString() + "%");
+            DecimalFormat df2 = new DecimalFormat("#,###,##0");
+            DecimalFormat df3 = new DecimalFormat("0.00");
+
+            if(item.getChange() != null){
+                if( item.getChange().toString().toLowerCase().equals("rise")){
+                    holder.txt_spot_content_price.setText(df2.format(Integer.parseInt(item.getDisplayedPrice())));
+                    holder.txt_spot_content_per.setText(df3.format(item.getPer()) + "%");
+                    holder.txt_spot_content_price.setTextColor(Color.parseColor("#C50000"));
+                    holder.txt_spot_content_per.setTextColor(Color.parseColor("#C50000"));
+                    holder.img_spot_content.setBackgroundResource(R.drawable.img_up_arrow);
+                } else if(item.getChange().toString().toLowerCase().equals("even")) {
+                    holder.txt_spot_content_price.setText(df2.format(Integer.parseInt(item.getDisplayedPrice())));
+                    holder.txt_spot_content_per.setText(df3.format(item.getPer()) + "%");
+                    holder.txt_spot_content_price.setTextColor(Color.parseColor("#000000"));
+                    holder.txt_spot_content_per.setTextColor(Color.parseColor("#000000"));
+                    holder.img_spot_content.setBackgroundResource(0);
+                } else {
+                    holder.txt_spot_content_price.setText(df2.format(Integer.parseInt(item.getDisplayedPrice())));
+                    holder.txt_spot_content_per.setText(df3.format(item.getPer()) + "%");
+                    holder.txt_spot_content_price.setTextColor(Color.parseColor("#0034AE"));
+                    holder.txt_spot_content_per.setTextColor(Color.parseColor("#0034AE"));
+                    holder.img_spot_content.setBackgroundResource(R.drawable.img_down_arrow);
+                }
+            } else {
+                holder.txt_spot_content_price.setText(df2.format(Integer.parseInt(item.getDisplayedPrice())));
+                holder.txt_spot_content_per.setText(df3.format(item.getPer()) + "%");
+                holder.txt_spot_content_price.setTextColor(Color.parseColor("#C50000"));
+                holder.txt_spot_content_per.setTextColor(Color.parseColor("#C50000"));
+                holder.img_spot_content.setBackgroundResource(R.drawable.img_up_arrow);
+            }
+
 
         } catch (Exception e) {
             ErrorController.showError(e);
@@ -86,6 +115,7 @@ public class AdapterCategoryLikeFavContentList extends NsBaseRecyclerViewAdapter
         private TextView txt_spot_content_price;
         private TextView txt_spot_content_per;
         private TextView txt_spot_content_more;
+        private ImageView img_spot_content;
 
         public ItemViewHolder(@NonNull View view) {
             super(view);
@@ -96,6 +126,7 @@ public class AdapterCategoryLikeFavContentList extends NsBaseRecyclerViewAdapter
             txt_spot_content_price = (TextView)view.findViewById(R.id.txt_spot_content_price);
             txt_spot_content_per = (TextView)view.findViewById(R.id.txt_spot_content_per);
             txt_spot_content_more = (TextView)view.findViewById(R.id.txt_spot_content_more);
+            img_spot_content = (ImageView)view.findViewById(R.id.img_spot_content);
 
             try {
                 txt_spot_content_title.setOnClickListener(new View.OnClickListener() {

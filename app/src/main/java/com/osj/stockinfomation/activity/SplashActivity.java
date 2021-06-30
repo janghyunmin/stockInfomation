@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.osj.stockinfomation.BuildConfig;
+import com.osj.stockinfomation.C.C;
 import com.osj.stockinfomation.CommonCallback.CommonCallback;
 import com.osj.stockinfomation.DAO.BaseDAO;
 import com.osj.stockinfomation.DAO.VersionDAO;
@@ -36,9 +37,11 @@ import com.osj.stockinfomation.R;
 import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.databinding.SplashActivityBinding;
 import com.osj.stockinfomation.util.PreferencesUtil;
+import com.osj.stockinfomation.util.PushPayloadDAO;
 
 public class SplashActivity extends BaseActivity {
     SplashActivityBinding binding;
+    PushPayloadDAO payload = null;
     Context mContext;
     private Window mWindow;
     CustomerMainPresenter customerMainPresenter;
@@ -58,6 +61,7 @@ public class SplashActivity extends BaseActivity {
         mContext = this;
         setProgress(binding.progress);
 
+        payload = (PushPayloadDAO) getIntent().getSerializableExtra(C.PUSH_PAYLOAD);
 
         if(PreferencesUtil.getString(mContext, PreferencesUtil.PreferenceKey.PREF_PERMISSION_INFO, "N").equals("N")){
             showPermisstionCustomAlert(this, new OnCancelListener() {
@@ -179,6 +183,8 @@ public class SplashActivity extends BaseActivity {
     private void goMain(){
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        if(payload != null)
+            intent.putExtra(C.PUSH_PAYLOAD, payload);
         startActivity(intent);
         finish();
 

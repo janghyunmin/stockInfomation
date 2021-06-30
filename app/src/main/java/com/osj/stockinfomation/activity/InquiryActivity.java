@@ -2,12 +2,18 @@ package com.osj.stockinfomation.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ScrollView;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.osj.stockinfomation.C.C;
 import com.osj.stockinfomation.CommonCallback.CommonCallback;
 import com.osj.stockinfomation.DAO.BaseDAO;
 import com.osj.stockinfomation.MVP.CustomerMainPresenter;
@@ -30,6 +36,8 @@ public class InquiryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inquiry);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         initView();
         initClickEvent();
     }
@@ -45,6 +53,18 @@ public class InquiryActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        binding.edtInquiryContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.nestedScrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.nestedScrollView.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
             }
         });
 

@@ -118,7 +118,17 @@ public class FragmentFirsth3Page extends BaseFragment {
         initView(view);
         setEvent();
         SpotUpDAOList spotUpDAOList = new SpotUpDAOList();
-        loadData(1, spotUpDAOList.getCaId(), "");
+        loadData(1, spotUpDAOList.getCaId(), "", "");
+        try {
+            if(EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+                EventBus.getDefault().register(this);
+            } else {
+                EventBus.getDefault().register(this);
+            }
+        } catch (Exception e){
+
+        }
         return view;
     }
 
@@ -216,7 +226,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                                 @Override
                                 public void onMore(int position) {
                                     Intent intent = new Intent(activity, BrowserActivity.class);
-                                    intent.putExtra("data", adapterMainSpotContentList.getData().get(position).getCode());
+                                    intent.putExtra("data", adapterCategoryLikeFavContentList.getData().get(position).getCode());
                                     intent.putExtra("openType", "search");
 
                                     startActivity(intent);
@@ -306,12 +316,9 @@ public class FragmentFirsth3Page extends BaseFragment {
                             txt_page3_middle1.setVisibility(View.VISIBLE);
 
                             if (result != null) {
-                                adapterMainpage3Cagegory22ContentList = new AdapterMainpage3Cagegory2ContentList(activity, result.getList(), new AdapterMainpage3Cagegory2ContentList.onClickCallback() {
-                                    @Override
-                                    public void onClick(SpotUpDAOListCategory2 item) {
-                                        loadData(3, item.getCaId(), item.getCodeName());
-                                        ca_id2 = item.getCaId();
-                                    }
+                                adapterMainpage3Cagegory22ContentList = new AdapterMainpage3Cagegory2ContentList(activity, result.getList(), item -> {
+                                    loadData(3, item.getCaId(), item.getCode(), item.getCodeName());
+                                    ca_id2 = item.getCaId();
                                 });
 
                                 gv_page3_category22.setAdapter(adapterMainpage3Cagegory22ContentList);
@@ -403,7 +410,7 @@ public class FragmentFirsth3Page extends BaseFragment {
         }
     }
 
-    public void loadData(int isFirst, String ca_id, String code_Name) {
+    public void loadData(int isFirst, String ca_id, String code, String code_Name) {
         switch (isFirst){
             case 1:
                 showProgress();
@@ -441,7 +448,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                                 @Override
                                 public void onClick(SpotUpDAOList item) {
 
-                                    loadData(2, item.getCaId(),"");
+                                    loadData(2, item.getCaId(), item.getCode(),"");
 //                                    txt_page3_middle.setVisibility(View.VISIBLE);
                                     ll_page3_grid.setVisibility(View.VISIBLE);
                                     txt_page3_middle.setText(item.getCodeName());
@@ -454,7 +461,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                                 @Override
                                 public void onClick(SpotUpDAOList item) {
 
-                                    loadData(2, item.getCaId(),"");
+                                    loadData(2, item.getCaId(), item.getCode(),"");
 //                                    txt_page3_middle.setVisibility(View.VISIBLE);
                                     ll_page3_grid.setVisibility(View.VISIBLE);
                                     txt_page3_middle.setText(item.getCodeName());
@@ -473,7 +480,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                 break;
             case 2:
                 showProgress();
-                mPresenter.getCategory02(ca_id, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
+                mPresenter.getCategory02(ca_id, code, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
                     @Override
                     public void onSuccess(SpotUpDAOCategory2 result) {
                         hideProgress();
@@ -486,7 +493,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                             adapterMainpage3Cagegory2ContentList = new AdapterMainpage3Cagegory2ContentList(activity, result.getList(), new AdapterMainpage3Cagegory2ContentList.onClickCallback() {
                                 @Override
                                 public void onClick(SpotUpDAOListCategory2 item) {
-                                    loadData(3, item.getCaId(), item.getCodeName());
+                                    loadData(3, item.getCaId(), item.getCode(), item.getCodeName());
                                     ca_id2 = item.getCaId();
                                 }
                             });
@@ -511,7 +518,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                 break;
             case 3:
                 showProgress();
-                mPresenter.getCategory03(activity, ca_id, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory3>() {
+                mPresenter.getCategory03(activity, ca_id, code, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory3>() {
                     @Override
                     public void onSuccess(SpotUpDAOCategory3 result) {
                         hideProgress();
@@ -621,19 +628,13 @@ public class FragmentFirsth3Page extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        try {
-            EventBus.getDefault().register(this);
-        } catch (Exception e){
-
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
         if(event.position == 13){
-            Log.d("osj", "first1page load date");
             SpotUpDAOList spotUpDAOList = new SpotUpDAOList();
-            loadData(1, spotUpDAOList.getCaId(), "");
+            loadData(1, spotUpDAOList.getCaId(), "", "");
         }
     }
 }

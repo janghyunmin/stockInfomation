@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,12 +44,14 @@ import com.osj.stockinfomation.DAO.GetSearchMainDAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAOList;
 import com.osj.stockinfomation.DAO.SetLikeDAO;
 import com.osj.stockinfomation.Http.NSCallback;
+import com.osj.stockinfomation.Http.Util_osj;
 import com.osj.stockinfomation.MVP.CustomerMainPresenter;
 import com.osj.stockinfomation.R;
 import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.databinding.ActivityMainBinding;
 import com.osj.stockinfomation.util.ErrorController;
 import com.osj.stockinfomation.util.MessageEvent;
+import com.osj.stockinfomation.util.PushPayloadDAO;
 import com.osj.stockinfomation.util.RecyclerDecoration;
 import com.osj.stockinfomation.util.WebViewSetter;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -67,6 +71,7 @@ public class MainActivity extends BaseActivity {
 
     ActivityMainBinding binding;
     private VpAdapterMain adapter;
+    public PushPayloadDAO payload = null;
 
     CustomerMainPresenter mPresenter;
 
@@ -76,6 +81,9 @@ public class MainActivity extends BaseActivity {
     private long backKeyPressedTime = 0;
     // 첫 번째 뒤로가기 버튼을 누를때 표시
     private Toast toast;
+
+    YouTubePlayerView youtube;
+    AlertDialog alertDialog = null;
 
     boolean piAll = false;
     boolean pi1 = false;
@@ -91,11 +99,15 @@ public class MainActivity extends BaseActivity {
         initViewPager();
         initClickEvent();
         loadData();
+        initFCM();
+
+        Log.d("osj", "android ID :: " + Util_osj.getAndroidId(this));
     }
 
     private void initView(){
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mPresenter = new CustomerMainPresenter();
+        payload = (PushPayloadDAO) getIntent().getSerializableExtra(C.PUSH_PAYLOAD);
 
         binding.icHeaderBar.rcHeader.setLayoutManager(new LinearLayoutManager(this));
         RecyclerDecoration spaceDecoration = new RecyclerDecoration(C.recyclerViewItemDepth);
@@ -136,6 +148,53 @@ public class MainActivity extends BaseActivity {
 
         } catch (Exception e) {
             ErrorController.showError(e);
+        }
+    }
+
+    public void initFCM(){
+        try {
+            if(payload != null) {
+
+                if (payload.getLinkUrl().equals("page1-1")) {
+                    EventBus.getDefault().post(new MessageEvent(0));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(0);
+                    bottomTabSelect(0);
+                } else if (payload.getLinkUrl().equals("page1-2")) {
+                    EventBus.getDefault().post(new MessageEvent(1001));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(0);
+
+                    bottomTabSelect(0);
+                } else if (payload.getLinkUrl().equals("page1-3")) {
+                    EventBus.getDefault().post(new MessageEvent(1002));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(0);
+                    bottomTabSelect(0);
+                } else if (payload.getLinkUrl().equals("page1-4")) {
+                    EventBus.getDefault().post(new MessageEvent(1003));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(0);
+                    bottomTabSelect(0);
+                }else if (payload.getLinkUrl().equals("page2")) {
+                    EventBus.getDefault().post(new MessageEvent(2));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(1);
+                    bottomTabSelect(1);
+                } else if (payload.getLinkUrl().equals("page3")) {
+                    EventBus.getDefault().post(new MessageEvent(3));
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(2);
+                    bottomTabSelect(2);
+                } else if (payload.getLinkUrl().equals("page4")) {
+                    SearchLayoutGone();
+                    binding.vpMain.setCurrentItem(3);
+                    bottomTabSelect(3);
+                }
+            }
+        } catch (Exception e){
+            showCustomAlert(MainActivity.this, "",
+                    "푸시 데이터가 정상적이지 않습니다.", true, R.drawable.img_alert_error, 1, "", "", null, null);
         }
     }
 
@@ -231,27 +290,51 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(GetSearchMainDAOList item) {
                 showProgress();
-                mPresenter.getContentView(MainActivity.this, "contents01", item.getWrId(), new CommonCallback.SingleObjectCallback<GetContentsViewDAO>() {
-                    @Override
-                    public void onSuccess(GetContentsViewDAO result) {
-                        hideProgress();
 
-                        for(int i = 0; i < searchAdapter.getData().size(); i++){
-                            if(searchAdapter.getData().get(i).getWrId().equals(result.getWrId())){
-                                searchAdapter.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(searchAdapter.getData().get(i).getWrHit()) + 1));
-                                searchAdapter.notifyDataSetChanged();
+                if(item.getBoTable().equals("contents02")){
+                    mPresenter.getContentViewType2(MainActivity.this, item.getBoTable(), item.getWrId(), new CommonCallback.SingleObjectCallback<GetContentsViewType2DAO>() {
+                        @Override
+                        public void onSuccess(GetContentsViewType2DAO result1) {
+                            hideProgress();
+                            for(int i = 0; i < searchAdapter.getData().size(); i++){
+                                if(searchAdapter.getData().get(i).getWrId().equals(result1.getWrId())){
+                                    searchAdapter.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(searchAdapter.getData().get(i).getWrHit()) + 1));
+                                    searchAdapter.notifyDataSetChanged();
+                                }
                             }
+
+                            showModalViewYoutube(result1);
                         }
 
-                        showContentView(result);
-                    }
+                        @Override
+                        public void onFailed(String fault) {
+                            hideProgress();
+                            showCustomAlert(MainActivity.this, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
+                        }
+                    });
+                } else {
+                    mPresenter.getContentView(MainActivity.this, item.getBoTable(), item.getWrId(), new CommonCallback.SingleObjectCallback<GetContentsViewDAO>() {
+                        @Override
+                        public void onSuccess(GetContentsViewDAO result) {
+                            hideProgress();
 
-                    @Override
-                    public void onFailed(String fault) {
-                        hideProgress();
-                        showCustomAlert(MainActivity.this, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
-                    }
-                });
+                            for(int i = 0; i < searchAdapter.getData().size(); i++){
+                                if(searchAdapter.getData().get(i).getWrId().equals(result.getWrId())){
+                                    searchAdapter.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(searchAdapter.getData().get(i).getWrHit()) + 1));
+                                    searchAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            showContentView(result);
+                        }
+
+                        @Override
+                        public void onFailed(String fault) {
+                            hideProgress();
+                            showCustomAlert(MainActivity.this, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
+                        }
+                    });
+                }
             }
         });
 
@@ -310,7 +393,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadData(){
-        showProgress();
+//        showProgress();
 //        mPresenter.getFreeUpdate(this, new CommonCallback.SingleObjectCallback<BaseDAO>() {
 //            @Override
 //            public void onSuccess(BaseDAO result) {
@@ -331,6 +414,7 @@ public class MainActivity extends BaseActivity {
                 hideProgress();
                 if(result.getCheckYn().equals("Y") || result.getCheckYn().equals("y"))
                     binding.btnPi.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -409,6 +493,8 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onSuccess(BaseDAO result) {
                             hideProgress();
+                            binding.btnPi.setVisibility(View.GONE);
+                            EventBus.getDefault().post(new MessageEvent(3));
                             showCustomAlert(MainActivity.this, "", "정상적으로 등록되었습니다.", true, R.drawable.img_alert_ok, 1, "", "", null, new OnClickListener() {
                                 @Override
                                 public void onClick() {
@@ -652,6 +738,38 @@ public class MainActivity extends BaseActivity {
         binding.icHeaderBar.rlFirst1Page.setVisibility(View.VISIBLE);
     }
 
+    private void showModalViewYoutube(GetContentsViewType2DAO result){
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_category2, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        alertDialog = builder.create();
+        alertDialog.show();
+
+        youtube = (YouTubePlayerView)alertDialog.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youtube);
+
+        youtube.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = result.getWrLink1();
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                alertDialog = null;
+                youtube.release();
+                C.backIndex = false;
+            }
+        });
+
+        C.backIndex = true;
+    }
+
     private void SearchLayoutGone(){
         binding.icHeaderBar.rlFirst1Page.setVisibility(View.GONE);
         binding.icHeaderBar.edtHeaderSearch.setText("");
@@ -675,7 +793,18 @@ public class MainActivity extends BaseActivity {
         }
 
         if(!C.backIndex){
-            if(binding.icHeaderBar.rlFirst1Page.getVisibility() == View.VISIBLE){
+            if(alertDialog != null){
+                alertDialog.dismiss();
+                youtube.release();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        C.backIndex = false;
+                    }
+                }, 100);
+            } else if(binding.icHeaderBar.rlFirst1Page.getVisibility() == View.VISIBLE){
                 binding.icHeaderBar.llHeaderSearchLayout.setVisibility(View.VISIBLE);
                 binding.icHeaderBar.rlFirst1Page.setVisibility(View.GONE);
             } else if(binding.icHeaderBar.llHeaderSearchLayout.getVisibility() == View.VISIBLE){

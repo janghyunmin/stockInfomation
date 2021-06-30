@@ -107,7 +107,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
-            PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
+//            PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
         }
         else
         {
@@ -151,21 +151,21 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         {
             intent = new Intent(context, SplashActivity.class);
             intent.putExtra(C.PUSH_PAYLOAD, payload);
-            PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
+//            PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
             pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
         else
         {
             try {
-                if(payload.getLinkUrl().length() >= 8){
+//                if(payload.getLinkUrl().length() >= 8){
                     intent = new Intent(context, MainActivity.class);
 //                    intent.putExtra(C.PUSH_PAYLOAD,payload.getLinkUrl());
 //                intent.putExtra(C.TOP_BTN_TYPE,TitleBaseActivity.TYPE_RIGHT_CLOSE);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(C.PUSH_PAYLOAD, payload);
                     pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-                    PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
-                }
+//                    PreferencesUtil.putString(getApplication(), PreferencesUtil.PreferenceKey.LINK, payload.getLinkUrl());
+//                }
             } catch (Exception e){
                 Log.d("osj", "Exception e :: " + e);
             }

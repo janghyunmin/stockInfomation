@@ -2,6 +2,8 @@ package com.osj.stockinfomation.Http;
 
 import android.os.AsyncTask;
 
+import com.osj.stockinfomation.R;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -56,7 +58,8 @@ public class LegacyHttpSender {
 
         } catch (Exception e) {
             HttpErrorController.showError(e);
-            callback.onFailed("서버로 부터 재대로된 응답을 받지 못했습니다.");
+
+            callback.onFailed("서버로 부터 제대로 된 응답을 받지 못했습니다.");
         }
     }
 

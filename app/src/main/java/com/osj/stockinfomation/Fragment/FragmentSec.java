@@ -196,6 +196,7 @@ public class FragmentSec extends BaseFragment {
                 swipeRefreshLayout.setRefreshing(false);
                 hideProgress();
                 if(result.getList().size() != 0){
+                    recyclerView.setVisibility(View.VISIBLE);
                     rl_fragment_sec_no_result.setVisibility(View.GONE);
                     adapter = new AdapterMyFavList(activity, result.getList(), "like", new AdapterMyFavList.SpotCallBack() {
                         @Override
@@ -254,6 +255,7 @@ public class FragmentSec extends BaseFragment {
 
                     recyclerView.setAdapter(adapter);
                 } else {
+                    recyclerView.setVisibility(View.GONE);
                     rl_fragment_sec_no_result.setVisibility(View.VISIBLE);
                 }
             }

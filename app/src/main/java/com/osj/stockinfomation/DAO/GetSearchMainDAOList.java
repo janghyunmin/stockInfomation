@@ -34,6 +34,10 @@ public class GetSearchMainDAOList {
     @SerializedName("detail_url")
     @Expose
     private String detailUrl;
+    @SerializedName("wr_link")
+    @Expose
+    private String wrLink;
+
 
     public String getBoTable() {
         return boTable;
@@ -113,5 +117,13 @@ public class GetSearchMainDAOList {
 
     public void setDetailUrl(String detailUrl) {
         this.detailUrl = detailUrl;
+    }
+
+    public String getWrLink() {
+        return wrLink;
+    }
+
+    public void setWrLink(String wrLink) {
+        this.wrLink = wrLink;
     }
 }

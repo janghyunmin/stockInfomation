@@ -75,6 +75,16 @@ public class FragmentFirsth2Page extends BaseFragment {
         initView(view);
         setEvent();
         loadData(true);
+        try {
+            if(EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+                EventBus.getDefault().register(this);
+            } else {
+                EventBus.getDefault().register(this);
+            }
+        } catch (Exception e){
+
+        }
         return view;
     }
 
@@ -147,8 +157,6 @@ public class FragmentFirsth2Page extends BaseFragment {
 
                 if (result.getList() != null && result.getList().size() > 0) {
                     if (isFirst) {
-
-
                         adapterMainContentList = new AdapterMainContentList(activity, result.getList(), "contents02", new AdapterMainContentList.onClickCallback() {
                             @Override
                             public void onClick(ResultMarketConditionsDAOList item, String contentType) {
@@ -348,17 +356,12 @@ public class FragmentFirsth2Page extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        try {
-            EventBus.getDefault().register(this);
-        } catch (Exception e){
 
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
         if(event.position == 12){
-            Log.d("osj", "first1page load date");
             loadData(true);
         }
     }

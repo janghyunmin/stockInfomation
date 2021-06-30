@@ -58,11 +58,11 @@ public class NSCallback<T> implements Callback<T> {
 
             } else {
 
-                mCallback.onFailed("서버로 부터 재대로된 응답을 받지 못했습니다.");
+                mCallback.onFailed("서버로 부터 제대로 된 응답을 받지 못했습니다.");
             }
         } catch (Exception e) {
             HttpErrorController.showError(e);
-            mCallback.onFailed("서버로 부터 재대로된 응답을 받지 못했습니다.");
+            mCallback.onFailed("서버로 부터 제대로 된 응답을 받지 못했습니다.");
         }
     }
 
@@ -70,7 +70,7 @@ public class NSCallback<T> implements Callback<T> {
     public void onFailure(Call<T> call, Throwable t) {
 
         HttpErrorController.showError(t);
-        mCallback.onFailed("서버로 부터 재대로된 응답을 받지 못했습니다.");
+        mCallback.onFailed("서버로 부터 제대로 된 응답을 받지 못했습니다.");
     }
 
     public interface SingleObjectCallback<T> {

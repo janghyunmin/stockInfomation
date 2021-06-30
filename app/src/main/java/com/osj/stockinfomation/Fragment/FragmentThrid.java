@@ -137,6 +137,7 @@ public class FragmentThrid extends BaseFragment {
             this.nestedScrollView = (NestedScrollView) view.findViewById(R.id.nestedScrollView);
 
             setProgress((ProgressBar)view.findViewById(R.id.progress));
+            rl_fragment_sec_no_result.setVisibility(View.GONE);
 
         } catch (Exception e) {
             ErrorController.showError(e);
@@ -179,6 +180,7 @@ public class FragmentThrid extends BaseFragment {
 
                 if(result.getList().size() != 0){
                     rl_fragment_sec_no_result.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     adapter = new AdapterPushList(activity, result.getList(), "free", new AdapterPushList.SpotCallBack() {
                         @Override
                         public void onTitleClick(int position) {
@@ -232,6 +234,7 @@ public class FragmentThrid extends BaseFragment {
                     recyclerView.setAdapter(adapter);
                 } else {
                     rl_fragment_sec_no_result.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
             }
 
