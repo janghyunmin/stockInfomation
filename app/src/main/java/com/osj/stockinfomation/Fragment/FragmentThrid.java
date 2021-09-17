@@ -119,6 +119,7 @@ public class FragmentThrid extends BaseFragment {
     public void onMessageEvent(MessageEvent event){
         Log.d("osj", "eventbus subscribe 3");
         if(event.position == 3){
+            Log.e("position 3 : ","");
             loadData(true);
         }
     }
@@ -177,6 +178,8 @@ public class FragmentThrid extends BaseFragment {
             public void onSuccess(GetPushListDAO result) {
                 swipeRefreshLayout.setRefreshing(false);
                 hideProgress();
+
+                Log.e("size : ", String.valueOf(result.getList().size()));
 
                 if(result.getList().size() != 0){
                     rl_fragment_sec_no_result.setVisibility(View.GONE);

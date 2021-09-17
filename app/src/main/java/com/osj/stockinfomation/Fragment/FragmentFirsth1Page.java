@@ -47,6 +47,7 @@ import com.osj.stockinfomation.util.HTMLTextView;
 import com.osj.stockinfomation.util.MessageEvent;
 import com.osj.stockinfomation.util.PagingUtil;
 import com.osj.stockinfomation.util.RecyclerDecoration;
+import com.osj.stockinfomation.util.StatusBarCustom;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -87,6 +88,7 @@ public class FragmentFirsth1Page extends BaseFragment {
         initView(view);
         setEvent();
         loadData(true);
+
 
         try {
             if(EventBus.getDefault().isRegistered(this)){
@@ -218,7 +220,7 @@ public class FragmentFirsth1Page extends BaseFragment {
 
                 if (result.getList() != null && result.getList().size() > 0) {
                     if (isFirst) {
-                        adapterMainContentList = new AdapterMainContentList(activity, result.getList(), "contents01", new AdapterMainContentList.onClickCallback() {
+                        adapterMainContentList = new AdapterMainContentList(1,activity, result.getList(), "contents01", new AdapterMainContentList.onClickCallback() {
                             @Override
                             public void onClick(ResultMarketConditionsDAOList item, String contentType) {
                                 showProgress();
@@ -228,6 +230,7 @@ public class FragmentFirsth1Page extends BaseFragment {
                                         hideProgress();
                                         for(int i = 0; i < adapterMainContentList.getData().size(); i++){
                                             if(adapterMainContentList.getData().get(i).getWrId().equals(result1.getWrId())){
+                                                Log.e("date : " ,adapterMainContentList.getData().get(i).getWrDatetime());
                                                 adapterMainContentList.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrHit()) + 1));
                                                 adapterMainContentList.notifyDataSetChanged();
                                             }

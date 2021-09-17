@@ -157,7 +157,7 @@ public class FragmentFirsth2Page extends BaseFragment {
 
                 if (result.getList() != null && result.getList().size() > 0) {
                     if (isFirst) {
-                        adapterMainContentList = new AdapterMainContentList(activity, result.getList(), "contents02", new AdapterMainContentList.onClickCallback() {
+                        adapterMainContentList = new AdapterMainContentList(2,activity, result.getList(), "contents02", new AdapterMainContentList.onClickCallback() {
                             @Override
                             public void onClick(ResultMarketConditionsDAOList item, String contentType) {
                                 showProgress();

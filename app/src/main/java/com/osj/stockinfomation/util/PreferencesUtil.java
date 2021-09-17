@@ -31,6 +31,7 @@ public class PreferencesUtil {
     public static final String PREF_PERMISSION_INFO = "PREF_PERMISSION_INFO";
 
 
+
     public static final String LINK = "link";
   }
 

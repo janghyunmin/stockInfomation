@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.osj.stockinfomation",
+  "variantName": "processPrdDebugResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 3,
+      "versionName": "1.0.3",
+      "outputFile": "고수의 급등주_debug_3_1.0.3_210909_1251.apk"
+    }
+  ]
+}

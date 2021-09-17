@@ -20,7 +20,7 @@ public class RetrofitSender2 {
 
     /* real */
     public static String BASE_URL = C.BASE_URL;
-    public static String URL_IMG_BASE = "http://183.111.125.16:8080";;
+    public static String URL_IMG_BASE = "http://183.111.125.16:8080";
 
     private static Retrofit retrofit = null;
 
@@ -55,8 +55,15 @@ public class RetrofitSender2 {
 
         initHttpClient();
 
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(httpClient)
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient)
                 .build();
+//        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(httpClient)
+//                .build();
 
         result = (T) retrofit.create(classType);
         return result;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="@android:anim/overshoot_interpolator"
+    >
+    <scale
+        android:fromXScale="0.0"
+        android:toXScale="1.0"
+        android:fromYScale="0.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="3000"/>
+    <!-- fromXScale 원래 사이즈의 배율 1.0 이 원래 사이즈 -->
+    <!-- pivotX="50%" p 는 parent 의 약자로 부모의 위치이다 -->
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="3000"/>
+</set>

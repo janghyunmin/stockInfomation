@@ -53,6 +53,7 @@ import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.base.BaseFragment;
 import com.osj.stockinfomation.databinding.FragmentFirst3PageBinding;
 import com.osj.stockinfomation.util.ErrorController;
+import com.osj.stockinfomation.util.LogUtil;
 import com.osj.stockinfomation.util.MessageEvent;
 import com.osj.stockinfomation.util.Spacing;
 import com.osj.stockinfomation.util.SpacingGrid3;
@@ -152,9 +153,9 @@ public class FragmentFirsth3Page extends BaseFragment {
             rl_fragment_first3_no_result = (RelativeLayout)view.findViewById(R.id.rl_fragment_first3_no_result);
             rl_fragment_first3 = (RelativeLayout)view.findViewById(R.id.rl_fragment_first3);
 
-            ll_page3_grid_view_on_off = (LinearLayout)view.findViewById(R.id.ll_page3_grid_view_on_off);
-            txt_page3_grid_view_on_off = (TextView)view.findViewById(R.id.txt_page3_grid_view_on_off);
-            iv_page3_grid_view_on_off = (ImageView)view.findViewById(R.id.iv_page3_grid_view_on_off);
+            //ll_page3_grid_view_on_off = (LinearLayout)view.findViewById(R.id.ll_page3_grid_view_on_off);
+           // txt_page3_grid_view_on_off = (TextView)view.findViewById(R.id.txt_page3_grid_view_on_off);
+           // iv_page3_grid_view_on_off = (ImageView)view.findViewById(R.id.iv_page3_grid_view_on_off);
 
             Spacing spaceDecoration = new Spacing(C.recyclerViewItemDepth, C.recyclerViewItemDepth);
             SpacingGrid3 spaceDecoration3 = new SpacingGrid3(C.recyclerViewItemDepth, C.recyclerViewItemDepth);
@@ -334,59 +335,59 @@ public class FragmentFirsth3Page extends BaseFragment {
                 }
             });
 
-            ll_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
-                        adapterGridPage3ContentList.setData(category1result.getList());
-                        adapterGridPage3ContentList.notifyDataSetChanged();
+//            ll_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
+//                        adapterGridPage3ContentList.setData(category1result.getList());
+//                        adapterGridPage3ContentList.notifyDataSetChanged();
+//
+//                        txt_page3_grid_view_on_off.setText("접기");
+//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
+//                    } else {
+//                        List<SpotUpDAOList> tempList = new ArrayList<>();
+//
+//                        for(int i = 0; i < category1result.getList().size(); i++){
+//                            if(i < 6)
+//                                tempList.add(category1result.getList().get(i));
+//                            else break;
+//                        }
+//
+//                        adapterGridPage3ContentList.setData(tempList);
+//                        adapterGridPage3ContentList.notifyDataSetChanged();
+//
+//                        txt_page3_grid_view_on_off.setText("펼쳐보기");
+//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
+//                    }
+//                }
+//            });
 
-                        txt_page3_grid_view_on_off.setText("접기");
-                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
-                    } else {
-                        List<SpotUpDAOList> tempList = new ArrayList<>();
-
-                        for(int i = 0; i < category1result.getList().size(); i++){
-                            if(i < 6)
-                                tempList.add(category1result.getList().get(i));
-                            else break;
-                        }
-
-                        adapterGridPage3ContentList.setData(tempList);
-                        adapterGridPage3ContentList.notifyDataSetChanged();
-
-                        txt_page3_grid_view_on_off.setText("펼쳐보기");
-                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
-                    }
-                }
-            });
-
-            txt_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
-                        adapterGridPage3ContentList.setData(category1result.getList());
-                        adapterGridPage3ContentList.notifyDataSetChanged();
-
-                        txt_page3_grid_view_on_off.setText("접기");
-                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
-                    } else {
-                        List<SpotUpDAOList> tempList = new ArrayList<>();
-
-                        for(int i = 0; i < category1result.getList().size(); i++){
-                            if(i < 6)
-                                tempList.add(category1result.getList().get(i));
-                            else break;
-                        }
-
-                        adapterGridPage3ContentList.setData(tempList);
-                        adapterGridPage3ContentList.notifyDataSetChanged();
-
-                        txt_page3_grid_view_on_off.setText("펼쳐보기");
-                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
-                    }
-                }
-            });
+//            txt_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
+//                        adapterGridPage3ContentList.setData(category1result.getList());
+//                        adapterGridPage3ContentList.notifyDataSetChanged();
+//
+//                        txt_page3_grid_view_on_off.setText("접기");
+//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
+//                    } else {
+//                        List<SpotUpDAOList> tempList = new ArrayList<>();
+//
+//                        for(int i = 0; i < category1result.getList().size(); i++){
+//                            if(i < 6)
+//                                tempList.add(category1result.getList().get(i));
+//                            else break;
+//                        }
+//
+//                        adapterGridPage3ContentList.setData(tempList);
+//                        adapterGridPage3ContentList.notifyDataSetChanged();
+//
+//                        txt_page3_grid_view_on_off.setText("펼쳐보기");
+//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
+//                    }
+//                }
+//            });
 
         } catch (Exception e) {
             ErrorController.showError(e);
@@ -431,44 +432,58 @@ public class FragmentFirsth3Page extends BaseFragment {
                         hideProgress();
                         category1result = result;
 
-                        if(result.getList().size() > 6){
-                            ll_page3_grid_view_on_off.setVisibility(View.VISIBLE);
-                            txt_page3_grid_view_on_off.setText("펼쳐보기");
-                            iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
-
-                            List<SpotUpDAOList> tempList = new ArrayList<>();
-
-                            for(int i = 0; i < result.getList().size(); i++){
-                                if(i < 6)
-                                    tempList.add(result.getList().get(i));
-                                else break;
+                        LogUtil.logE("result " + result.getList().size());
+                        List<SpotUpDAOList> tempList = new ArrayList<>();
+                        for(int i = 0; i < result.getList().size(); i++){
+                              tempList.add(result.getList().get(i));
                             }
-
-                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, tempList, new AdapterMainpage3ContentList.onClickCallback() {
-                                @Override
-                                public void onClick(SpotUpDAOList item) {
-
-                                    loadData(2, item.getCaId(), item.getCode(),"");
-//                                    txt_page3_middle.setVisibility(View.VISIBLE);
-                                    ll_page3_grid.setVisibility(View.VISIBLE);
-                                    txt_page3_middle.setText(item.getCodeName());
-                                }
-                            });
-                        } else {
-                            ll_page3_grid_view_on_off.setVisibility(View.GONE);
-
-                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, result.getList(), new AdapterMainpage3ContentList.onClickCallback() {
-                                @Override
-                                public void onClick(SpotUpDAOList item) {
-
-                                    loadData(2, item.getCaId(), item.getCode(),"");
-//                                    txt_page3_middle.setVisibility(View.VISIBLE);
-                                    ll_page3_grid.setVisibility(View.VISIBLE);
-                                    txt_page3_middle.setText(item.getCodeName());
-                                }
-                            });
-                        }
+                        adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, tempList, new AdapterMainpage3ContentList.onClickCallback() {
+                            @Override
+                            public void onClick(SpotUpDAOList item) {
+                                loadData(2, item.getCaId(), item.getCode(),"");
+                                ll_page3_grid.setVisibility(View.VISIBLE);
+                                txt_page3_middle.setText(item.getCodeName());
+                            }
+                        });
                         gv_page3.setAdapter(adapterGridPage3ContentList);
+//                        if(result.getList().size() > 6){
+//                            ll_page3_grid_view_on_off.setVisibility(View.VISIBLE);
+//                            txt_page3_grid_view_on_off.setText("펼쳐보기");
+//                            iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
+//
+//                            List<SpotUpDAOList> tempList = new ArrayList<>();
+//
+//                            for(int i = 0; i < result.getList().size(); i++){
+//                                if(i < 6)
+//                                    tempList.add(result.getList().get(i));
+//                                else break;
+//                            }
+//
+//                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, tempList, new AdapterMainpage3ContentList.onClickCallback() {
+//                                @Override
+//                                public void onClick(SpotUpDAOList item) {
+//
+//                                    loadData(2, item.getCaId(), item.getCode(),"");
+////                                    txt_page3_middle.setVisibility(View.VISIBLE);
+//                                    ll_page3_grid.setVisibility(View.VISIBLE);
+//                                    txt_page3_middle.setText(item.getCodeName());
+//                                }
+//                            });
+//                        } else {
+//                            ll_page3_grid_view_on_off.setVisibility(View.GONE);
+//
+//                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, result.getList(), new AdapterMainpage3ContentList.onClickCallback() {
+//                                @Override
+//                                public void onClick(SpotUpDAOList item) {
+//
+//                                    loadData(2, item.getCaId(), item.getCode(),"");
+////                                    txt_page3_middle.setVisibility(View.VISIBLE);
+//                                    ll_page3_grid.setVisibility(View.VISIBLE);
+//                                    txt_page3_middle.setText(item.getCodeName());
+//                                }
+//                            });
+//                        }
+//                        gv_page3.setAdapter(adapterGridPage3ContentList);
                     }
 
                     @Override

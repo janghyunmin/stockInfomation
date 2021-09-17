@@ -113,7 +113,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
-                    txt_dialog_main_1
                     <ImageView
                         android:id="@+id/iv_dialog_main_check1"
                         android:layout_width="wrap_content"

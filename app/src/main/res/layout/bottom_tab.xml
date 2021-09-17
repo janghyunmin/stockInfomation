@@ -69,7 +69,7 @@
                 android:id="@+id/txt_bottom_tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="즐겨찾기"
+                android:text="실시간수익현황"
                 android:layout_marginTop="5dp"
                 android:textSize="10sp"/>
 
@@ -96,7 +96,7 @@
                 android:id="@+id/txt_bottom_tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="무료추천종목"
+                android:text="수익인증"
                 android:layout_marginTop="5dp"
                 android:textSize="10sp"/>
 

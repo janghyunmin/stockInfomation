@@ -1,49 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
-
-    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
-        app:srl_direction="both">
+        android:background="@color/c_d7d7d7"
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+        >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    >
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_maincontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#F2F3F6"
-                android:padding="10dp">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/kospi_layout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.core.widget.NestedScrollView>
-    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+                        <TextView
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:id="@+id/top_title"
+                            android:text="오늘의 증시"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-    <include
-        android:id="@+id/ic_today_tlghkd"
-        layout="@layout/include_today_tlghkd"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+                        <TextView
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/top_title"
+                            android:id="@+id/m_kospi"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="코스피"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/m_kospi_num"
+                            app:layout_constraintLeft_toRightOf="@+id/m_kospi"
+                            app:layout_constraintTop_toTopOf="@+id/m_kospi"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kospi"
+                            android:layout_marginStart="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3,130.09"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_4e7dff"
+                            />
 
-</RelativeLayout>
+                        <ImageView
+                            android:id="@+id/m_kospi_img"
+                            app:layout_constraintRight_toLeftOf="@+id/m_kospi_num_2"
+                            app:layout_constraintTop_toTopOf="@+id/m_kospi_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kospi_num"
+                            android:layout_marginEnd="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/img_down_arrow"
+                            />
+
+                        <TextView
+                            android:id="@+id/m_kospi_num_2"
+                            app:layout_constraintRight_toLeftOf="@+id/m_kospi_num_per"
+                            app:layout_constraintTop_toTopOf="@+id/m_kospi_img"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kospi_img"
+                            android:layout_marginEnd="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="27.56"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_4e7dff"
+                            />
+
+                        <TextView
+                            android:id="@+id/m_kospi_num_per"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/m_kospi_img"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kospi_img"
+                            android:layout_marginEnd="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.19%"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_4e7dff"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/kosdaq_layout"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintTop_toBottomOf="@+id/kospi_layout"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:id="@+id/m_kosdaq"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="코스닥"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/m_kosdaq_num"
+                            app:layout_constraintLeft_toRightOf="@+id/m_kosdaq"
+                            app:layout_constraintTop_toTopOf="@+id/m_kosdaq"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kosdaq"
+                            android:layout_marginStart="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="802.95"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_fe0000"
+                            />
+
+                        <ImageView
+                            android:id="@+id/m_kosdaq_img"
+                            app:layout_constraintRight_toLeftOf="@+id/m_kosdaq_num_2"
+                            app:layout_constraintTop_toTopOf="@+id/m_kosdaq_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kosdaq_num"
+                            android:layout_marginEnd="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/img_up_arrow"
+                            />
+
+                        <TextView
+                            android:id="@+id/m_kosdaq_num_2"
+                            app:layout_constraintRight_toLeftOf="@+id/m_kosdaq_num_per"
+                            app:layout_constraintTop_toTopOf="@+id/m_kosdaq_img"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kosdaq_img"
+                            android:layout_marginEnd="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="27.56"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_fe0000"
+                            />
+
+                        <TextView
+                            android:id="@+id/m_kosdaq_num_per"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/m_kosdaq_img"
+                            app:layout_constraintBottom_toBottomOf="@+id/m_kosdaq_img"
+                            android:layout_marginEnd="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.19%"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/c_fe0000"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--            <androidx.recyclerview.widget.RecyclerView-->
+                <!--                android:id="@+id/rc_maincontent"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="match_parent"-->
+                <!--                android:background="#F2F3F6"-->
+                <!--                android:padding="10dp">-->
+
+                <!--            </androidx.recyclerview.widget.RecyclerView>-->
+
+
+        <!--    <include-->
+        <!--        android:id="@+id/ic_today_tlghkd"-->
+        <!--        layout="@layout/include_today_tlghkd"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"/>-->
+
+        <!--    <ProgressBar-->
+        <!--        android:id="@+id/progress"-->
+        <!--        android:layout_width="40dp"-->
+        <!--        android:layout_height="40dp"-->
+        <!--        android:layout_centerHorizontal="true"-->
+        <!--        android:layout_centerVertical="true"-->
+        <!--        android:visibility="gone"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

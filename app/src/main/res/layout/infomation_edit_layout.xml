@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/app_logo"
+                />
+
+            <TextView
+                android:id="@+id/top_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/information_top_title"
+                app:layout_constraintTop_toBottomOf="@+id/img"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="고수의 급등주를 이용하기 위해서 약관 동의가 필요합니다.\n약관에 동의하시고 고수의 급등주를 즐겨보세요."
+                app:layout_constraintTop_toBottomOf="@+id/top_title"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="13sp"
+                android:textColor="@color/c_a8a7a7"
+                />
+
+            <EditText
+                android:id="@+id/edt_dialog_main_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt1"
+                android:hint="성함을 입력해주세요."
+                app:layout_constraintTop_toBottomOf="@+id/sub_title"
+                android:background="@drawable/intro_login_btn_shape2"
+                android:layout_marginTop="25dp"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                android:nextFocusDown="@id/edt_dialog_main_phone"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
+                android:inputType="text">
+            </EditText>
+
+            <EditText
+                android:id="@+id/edt_dialog_main_phone"
+                app:layout_constraintTop_toBottomOf="@+id/edt_dialog_main_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_dialog_main_name"
+                android:background="@drawable/intro_login_btn_shape2"
+                android:hint="연락처를 입력해주세요.(숫자만)"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:imeOptions="actionDone"/>
+
+
+            <View
+                android:id="@+id/line"
+                app:layout_constraintTop_toBottomOf="@+id/edt_dialog_main_phone"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e5e5e5"
+                />
+
+            <ImageView
+                android:id="@+id/iv_dialog_main_all_check"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/img_pi_check_off"
+                app:layout_constraintTop_toBottomOf="@+id/line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체 동의하기"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_all_check"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_dialog_main_all_check"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/iv_dialog_main_all_check"
+                />
+
+
+            <View
+                android:id="@+id/line2"
+                app:layout_constraintTop_toBottomOf="@+id/iv_dialog_main_all_check"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e5e5e5"
+                />
+
+            <ImageView
+                android:id="@+id/iv_dialog_main_check1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line2"
+                android:layout_marginTop="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/img_pi_check1_off"
+                />
+
+            <TextView
+                android:id="@+id/txt_dialog_main_check1"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check1"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_dialog_main_check1"
+                app:layout_constraintLeft_toRightOf="@+id/iv_dialog_main_check1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개인정보처리방침 동의하기(필수)"
+                android:textColor="#888888"
+                android:layout_marginLeft="10dp"
+
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/txt_dialog_main_1"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check1"
+                app:layout_constraintBottom_toBottomOf="@id/iv_dialog_main_check1"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="보기"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_dialog_main_check2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_dialog_main_check1"
+                android:layout_marginTop="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/img_pi_check1_off"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/txt_dialog_main_check2"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check2"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_dialog_main_check2"
+                app:layout_constraintLeft_toRightOf="@+id/iv_dialog_main_check2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메시지 수신 약관 동의하기(필수)"
+                android:textColor="#888888"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/txt_dialog_main_2"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check2"
+                app:layout_constraintBottom_toBottomOf="@id/iv_dialog_main_check2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="보기"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"/>
+
+
+            <ImageView
+                android:id="@+id/iv_dialog_main_check3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_dialog_main_check2"
+                android:layout_marginTop="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/img_pi_check1_off"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/txt_dialog_main_check3"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check3"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_dialog_main_check3"
+                app:layout_constraintLeft_toRightOf="@+id/iv_dialog_main_check3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제3자 마케팅활용 동의하기(필수)"
+                android:textColor="#888888"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/txt_dialog_main_3"
+                app:layout_constraintTop_toTopOf="@+id/iv_dialog_main_check3"
+                app:layout_constraintBottom_toBottomOf="@id/iv_dialog_main_check3"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="보기"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"/>
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/c_ff0000"
+            >
+
+            <TextView
+                android:id="@+id/next_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="확인"
+                android:gravity="center"
+                android:textColor="@color/white"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

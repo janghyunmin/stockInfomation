@@ -13,6 +13,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,12 +38,16 @@ import com.osj.stockinfomation.MVP.CustomerMainPresenter;
 import com.osj.stockinfomation.R;
 import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.databinding.SplashActivityBinding;
+import com.osj.stockinfomation.util.LogUtil;
+import com.osj.stockinfomation.util.MessageEvent;
 import com.osj.stockinfomation.util.PreferencesUtil;
 import com.osj.stockinfomation.util.PushPayloadDAO;
+import com.osj.stockinfomation.util.StatusBarCustom;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class SplashActivity extends BaseActivity {
     SplashActivityBinding binding;
-    PushPayloadDAO payload = null;
     Context mContext;
     private Window mWindow;
     CustomerMainPresenter customerMainPresenter;
@@ -59,26 +65,20 @@ public class SplashActivity extends BaseActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.splash_activity);
         mContext = this;
-        setProgress(binding.progress);
 
-        payload = (PushPayloadDAO) getIntent().getSerializableExtra(C.PUSH_PAYLOAD);
-
-        if(PreferencesUtil.getString(mContext, PreferencesUtil.PreferenceKey.PREF_PERMISSION_INFO, "N").equals("N")){
-            showPermisstionCustomAlert(this, new OnCancelListener() {
-                @Override
-                public void onClick() {
-                    finish();
-                }
-            }, new OnClickListener() {
-                @Override
-                public void onClick() {
-                    PreferencesUtil.putString(mContext, PreferencesUtil.PreferenceKey.PREF_PERMISSION_INFO, "Y");
-                    getVersion();
-                }
-            });
-        } else {
-            getVersion();
-        }
+        /** jhm 2021-09-15 오후 5:34
+         * 애니메이션 및 statusbar 커스텀 셋팅
+         ***/
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.intro_animation);
+        binding.logo.startAnimation(animation);
+        // Status bar custom
+        StatusBarCustom.setStatusBarColor(this, StatusBarCustom.StatusBarColorType.BLACK_STATUS_BAR);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getVersion(); // 앱 버전 체크
+            }
+        },3500);
     }
 
     private void getVersion(){
@@ -93,14 +93,15 @@ public class SplashActivity extends BaseActivity {
                     versionName = versionName.replace(".", "");
                     newVersionName = result.getAppVersion().replace(".", "");
                     if(Integer.parseInt(versionName) >= Integer.parseInt(newVersionName)){
-                        getPushYn();
+                        hideProgress();
+                        goInfo();
                     } else {
                         showCustomAlert(SplashActivity.this, "알림", "최신버젼이 있습니다. 마켓으로 이동 하시겠습니까?", false, R.drawable.img_alert_error, 2, "아니오", "확인"
                                 , new OnCancelListener() {
                             @Override
                             public void onClick() {
                                 hideProgress();
-                                getPushYn();
+                                goInfo();
                             }
                         }, new OnClickListener() {
                             @Override
@@ -131,73 +132,34 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-    /**
-     * setPushData
-     * push 데이터 서버 전송
-     */
-    private void getPushYn(){
-        getToken();
-    }
+    public void goInfo(){
 
-    /**
-     * PUSH 토큰 획득
-     */
-    private void getToken(){
-        showProgress();
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+        customerMainPresenter.getUser(SplashActivity.this, Util_osj.getAndroidId(mContext),new CommonCallback.SingleObjectCallback<BaseDAO>() {
             @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if(!task.isSuccessful()){
-                    hideProgress();
-                    goMain();
-                } else {
-                    hideProgress();
-                    String token = task.getResult().getToken();
-                    Log.d("osj", "token :: " + token);
-                    PreferencesUtil.putString(mContext, PreferencesUtil.PreferenceKey.PREF_TOKEN, token);
-//                    goMain();
-                    showProgress();
-                    customerMainPresenter.setUser(SplashActivity.this, Build.MODEL +  " | " + Build.VERSION.SDK_INT, token , new CommonCallback.SingleObjectCallback<BaseDAO>() {
-                        @Override
-                        public void onSuccess(BaseDAO result) {
-                            hideProgress();
-                            goMain();
-                        }
+            public void onSuccess(BaseDAO result) {
+                LogUtil.logE("resulctCode" + result.getResultCode());
 
-                        @Override
-                        public void onFailed(String fault) {
-                            hideProgress();
-                            showCustomAlert(SplashActivity.this, "", fault, true, R.drawable.img_alert_error, 1, "", "재시도", null, new OnClickListener() {
-                                @Override
-                                public void onClick() {
-                                    getToken();
-                                }
-                            });
-                        }
-                    });
+                switch (result.getResultCode()){
+                    case "99":
+                        Intent go_insert = new Intent(getApplicationContext(), InfoInsertActivity.class);
+                        startActivity(go_insert);
+                        finish();
+                        break;
+                    case "00":
+                        hideProgress();
+                        LogUtil.logE("이미 통과");
+                        Intent go_main = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(go_main);
+                        finish();
+                        break;
                 }
             }
+
+            @Override
+            public void onFailed(String fault) {
+
+            }
         });
-    }
-
-    private void goMain(){
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        if(payload != null)
-            intent.putExtra(C.PUSH_PAYLOAD, payload);
-        startActivity(intent);
-        finish();
-
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }, 100);
-
 
     }
 }

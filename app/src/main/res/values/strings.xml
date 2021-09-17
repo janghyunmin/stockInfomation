@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">고수의급등주</string>
+     <string name="app_name">고수의 급등주</string>
     <string name="page1_fav_on">즐겨찾기가\n추가되었습니다.</string>
     <string name='page1_fav_off'>즐겨찾기가\n해제되었습니다.</string>
     <string name='page1_fav_subtitle'>하단 즐겨찾기 메뉴에서 확인.</string>
@@ -7,4 +7,10 @@
     <string name="page3_fav_on_title">관련주 즐겨찾기가\n추가되었습니다.</string>
     <string name="page3_fav_off_title">관련주 즐겨찾기가\n해제되었습니다.</string>
     <string name="page3_fav_subtitle">관련주 즐겨찾기 메뉴에서 확인.</string>
+
+
+
+
+    <string name="information_top_title">고수의 급등주 약관 동의</string>
+    <string name="information_sub_title">고수의 급등주를 이용하기 위해서 약관 동의가 필요합니다.\n약관에 동의하시고 고수의 급등주를 즐겨보세요.</string>
 </resources>

@@ -3,7 +3,6 @@ package com.osj.stockinfomation.MVP;
 import android.app.Activity;
 import android.util.Log;
 
-import com.osj.stockinfomation.Adapter.AdapterMainContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainpage4ContentList;
 import com.osj.stockinfomation.CommonCallback.CommonCallback;
 import com.osj.stockinfomation.DAO.BaseDAO;
@@ -25,12 +24,18 @@ import com.osj.stockinfomation.DAO.SetLikeDAO;
 import com.osj.stockinfomation.DAO.SpotUpDAO;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory2;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory3;
+import com.osj.stockinfomation.DAO.UserDAO;
 import com.osj.stockinfomation.DAO.VersionDAO;
 import com.osj.stockinfomation.Http.EndpointMain;
 import com.osj.stockinfomation.Http.NSCallback;
 import com.osj.stockinfomation.Http.RetrofitSender2;
 import com.osj.stockinfomation.Http.Util_osj;
 import com.osj.stockinfomation.util.ErrorController;
+import com.osj.stockinfomation.util.LogUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by YJK on 2019-03-14
@@ -89,6 +94,8 @@ public class CustomerMainPresenter {
                     callback.onFailed(fault);
                 }
             }));
+
+
 
 //            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getMainContentList(tempPage, Util_osj.getAndroidId(context), board_type).enqueue(new NSCallback<ResultMarketConditionsDAO>(new NSCallback.SingleObjectCallback<ResultMarketConditionsDAO>() {
 //                @Override
@@ -421,6 +428,27 @@ public class CustomerMainPresenter {
             ErrorController.showError(e);
         }
     }
+    public void getUser(final Activity context, String mb_id,final CommonCallback.SingleObjectCallback<BaseDAO> callback){
+        try{
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getUser(mb_id).enqueue(new NSCallback<BaseDAO>(new NSCallback.SingleObjectCallback<BaseDAO>() {
+                @Override
+                public void onSuccess(BaseDAO result) {
+                    if (result.getResultCode().equals("00") || result.getResultCode().equals("99"))
+                        callback.onSuccess(result);
+                    else
+                        callback.onFailed(result.getMessage());
+                }
+
+                @Override
+                public void onFailed(String fault) {
+                    callback.onFailed(fault);
+                }
+            }));
+
+        } catch (Exception e) {
+            ErrorController.showError(e);
+        }
+    }
 
     public void setProfile(final Activity context, String nickName, final CommonCallback.SingleObjectCallback<BaseDAO> callback) {
         try{
@@ -532,6 +560,32 @@ public class CustomerMainPresenter {
         }
     }
 
+    /** jhm 2021-09-01 오후 2:22
+     * 앱 최초 진입시
+     ***/
+    public void setInsertUser(final Activity context, String mb_name, String mb_hp , String token , final CommonCallback.SingleObjectCallback<BaseDAO> callback) {
+        try{
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).setInsertUser(Util_osj.getAndroidId(context), mb_name, mb_hp , token).enqueue(new NSCallback<BaseDAO>(new NSCallback.SingleObjectCallback<BaseDAO>() {
+                @Override
+                public void onSuccess(BaseDAO result) {
+                    if (result.getResultCode().equals("00"))
+                        callback.onSuccess(result);
+                    else
+                        callback.onFailed(result.getMessage());
+                }
+
+                @Override
+                public void onFailed(String fault) {
+                    callback.onFailed(fault);
+                }
+            }));
+
+        } catch (Exception e) {
+            ErrorController.showError(e);
+        }
+    }
+
+
     public void setFreeUpdate(final Activity context, String mb_name, String mb_hp, final CommonCallback.SingleObjectCallback<BaseDAO> callback) {
         try{
             RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).setFreeUpdate(Util_osj.getAndroidId(context), mb_name, mb_hp).enqueue(new NSCallback<BaseDAO>(new NSCallback.SingleObjectCallback<BaseDAO>() {
@@ -554,27 +608,24 @@ public class CustomerMainPresenter {
         }
     }
 
-    public void getFreeUpdate(final Activity context, final CommonCallback.SingleObjectCallback<BaseDAO> callback) {
-        try{
-            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getFreeUpdate(Util_osj.getAndroidId(context)).enqueue(new NSCallback<BaseDAO>(new NSCallback.SingleObjectCallback<BaseDAO>() {
-                @Override
-                public void onSuccess(BaseDAO result) {
-                    if (result.getResultCode().equals("99"))
-                        callback.onSuccess(result);
-                    else
-                        callback.onFailed(result.getMessage());
-                }
-
-                @Override
-                public void onFailed(String fault) {
-                    callback.onFailed(fault);
-                }
-            }));
-
-        } catch (Exception e) {
-            ErrorController.showError(e);
-        }
-    }
+//    public void getFreeUpdate(final Activity context, final CommonCallback.ListCallback<UserDAO.UserInfo> callback) {
+//        try{
+//            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getFreeUpdate(Util_osj.getAndroidId(context)).enqueue(new NSCallback<UserDAO.UserInfo>(new NSCallback.SingleObjectCallback<UserDAO.UserInfo>() {
+//                @Override
+//                public void onSuccess(UserDAO.UserInfo result) {
+//                        callback.onSuccess(result.getDisplayBtn());
+//                }
+//
+//                @Override
+//                public void onFailed(String fault) {
+//                    callback.onFailed(fault);
+//                }
+//            }));
+//
+//        } catch (Exception e) {
+//            ErrorController.showError(e);
+//        }
+//    }
 
     public void setInquiry(final Activity context, String name, String email, String content, final CommonCallback.SingleObjectCallback<BaseDAO> callback) {
         try{
@@ -647,10 +698,23 @@ public class CustomerMainPresenter {
             RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getPushList(Util_osj.getAndroidId(context), bo_table).enqueue(new NSCallback<GetPushListDAO>(new NSCallback.SingleObjectCallback<GetPushListDAO>() {
                 @Override
                 public void onSuccess(GetPushListDAO result) {
-                    if (result.getResultCode().equals("00"))
+//                    Log.e("mb_id" , Util_osj.getAndroidId(context));
+//                    Log.e("bo_Table " , bo_table);
+                    if (result.getResultCode().equals("00")){
+//                        Log.e("resultCode : " , result.getResultCode());
+//                        Log.e("getPustList size  : " , String.valueOf(result.getList().size()));
+//                        for(int index = 0; index < result.getList().size(); index++){
+//                            Log.e("getPuId  " , result.getList().get(index).getPuId());
+//                            Log.e("getPuSubject  " , result.getList().get(index).getPuSubject());
+//                            Log.e("getSendDatetime  " , result.getList().get(index).getSendDatetime());
+//                        }
                         callback.onSuccess(result);
-                    else
+                    }
+                    else{
+                        Log.e("resultCode else : " , result.getResultCode());
                         callback.onFailed(result.getMessage());
+                    }
+
                 }
 
                 @Override
@@ -730,15 +794,23 @@ public class CustomerMainPresenter {
         }
     }
 
+    /** jhm 2021-08-31 오후 5:40
+     * 무료종목 3일 Check
+     ***/
     public void getCheckFree(final Activity context, final CommonCallback.SingleObjectCallback<GetCheckFreeDAO> callback) {
         try{
             RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCheckFree(Util_osj.getAndroidId(context)).enqueue(new NSCallback<GetCheckFreeDAO>(new NSCallback.SingleObjectCallback<GetCheckFreeDAO>() {
                 @Override
                 public void onSuccess(GetCheckFreeDAO result) {
-                    if (result.getResultCode().equals("00"))
+                    if (result.getResultCode().equals("00")){
+                        LogUtil.logE("getCheckFree onSuccess " + result.getResultCode());
                         callback.onSuccess(result);
-                    else
+                    }
+                    else{
+                        LogUtil.logE("getCheckFree onFailed " + result.getMessage());
                         callback.onFailed(result.getMessage());
+                    }
+
                 }
 
                 @Override

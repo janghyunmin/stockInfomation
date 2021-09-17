@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,14 +43,18 @@ import com.osj.stockinfomation.DAO.GetContentsViewDAO;
 import com.osj.stockinfomation.DAO.GetContentsViewType2DAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAOList;
+import com.osj.stockinfomation.DAO.IndexDAO;
 import com.osj.stockinfomation.DAO.SetLikeDAO;
+import com.osj.stockinfomation.DAO.UserDAO;
 import com.osj.stockinfomation.Http.NSCallback;
 import com.osj.stockinfomation.Http.Util_osj;
 import com.osj.stockinfomation.MVP.CustomerMainPresenter;
 import com.osj.stockinfomation.R;
+import com.osj.stockinfomation.Retrofit.RetrofitClient;
 import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.databinding.ActivityMainBinding;
 import com.osj.stockinfomation.util.ErrorController;
+import com.osj.stockinfomation.util.LogUtil;
 import com.osj.stockinfomation.util.MessageEvent;
 import com.osj.stockinfomation.util.PushPayloadDAO;
 import com.osj.stockinfomation.util.RecyclerDecoration;
@@ -66,6 +71,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
@@ -90,10 +99,12 @@ public class MainActivity extends BaseActivity {
     boolean pi2 = false;
     boolean pi3 = false;
 
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         initView();
         initViewPager();
@@ -101,7 +112,22 @@ public class MainActivity extends BaseActivity {
         loadData();
         initFCM();
 
-        Log.d("osj", "android ID :: " + Util_osj.getAndroidId(this));
+        context = this;
+
+        Call<IndexDAO> indexDAOCall = RetrofitClient.getInstance(context).getService().getIndex("kospi");
+        indexDAOCall.enqueue(new Callback<IndexDAO>() {
+            @Override
+            public void onResponse(Call<IndexDAO> call, Response<IndexDAO> response) {
+                LogUtil.logE("getResult " + response.body().getResult());
+                LogUtil.logE("getJsonrpc " + response.body().getJsonrpc());
+            }
+
+            @Override
+            public void onFailure(Call<IndexDAO> call, Throwable t) {
+
+            }
+        });
+        LogUtil.logE("MainActivity start ");
     }
 
     private void initView(){
@@ -112,6 +138,9 @@ public class MainActivity extends BaseActivity {
         binding.icHeaderBar.rcHeader.setLayoutManager(new LinearLayoutManager(this));
         RecyclerDecoration spaceDecoration = new RecyclerDecoration(C.recyclerViewItemDepth);
         binding.icHeaderBar.rcHeader.addItemDecoration(spaceDecoration);
+
+
+
     }
 
     private void initViewPager() {
@@ -393,28 +422,26 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadData(){
-//        showProgress();
-//        mPresenter.getFreeUpdate(this, new CommonCallback.SingleObjectCallback<BaseDAO>() {
-//            @Override
-//            public void onSuccess(BaseDAO result) {
-//                hideProgress();
-//                binding.btnPi.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onFailed(String fault) {
-//                hideProgress();
-//            }
-//        });
-
+        LogUtil.logE("loadData");
         showProgress();
+        /** jhm 2021-09-03 오후 1:55
+         * 플로팅 버튼 체크
+         ***/
         mPresenter.getCheckFree(this, new CommonCallback.SingleObjectCallback<GetCheckFreeDAO>() {
             @Override
             public void onSuccess(GetCheckFreeDAO result) {
                 hideProgress();
-                if(result.getCheckYn().equals("Y") || result.getCheckYn().equals("y"))
-                    binding.btnPi.setVisibility(View.VISIBLE);
-
+                LogUtil.logE("getDisplay : " + result.getDisplay_btn());
+                if(result.getDisplay_btn()!=null){
+                    switch (result.getDisplay_btn()){
+                        case "DISABLED":
+                            binding.btnPi.setVisibility(View.GONE);
+                            break;
+                        case "ENABLED":
+                            binding.btnPi.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                }
             }
 
             @Override
@@ -422,6 +449,7 @@ public class MainActivity extends BaseActivity {
                 hideProgress();
             }
         });
+
     }
 
     private void showModalView(){
@@ -488,6 +516,10 @@ public class MainActivity extends BaseActivity {
                         return;
                     }
 
+
+                    /** jhm 2021-09-03 오후 1:04
+                     * 플로팅버튼
+                     ***/
                     showProgress();
                     mPresenter.setFreeUpdate(MainActivity.this, edt_dialog_main_name.getText().toString(), edt_dialog_main_phone.getText().toString(), new CommonCallback.SingleObjectCallback<BaseDAO>() {
                         @Override

@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.osj.stockinfomation",
+  "variantName": "processPrdReleaseResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 4,
+      "versionName": "1.0.4",
+      "outputFile": "고수의 급등주_release_4_1.0.4_210913_1745.apk"
+    }
+  ]
+}

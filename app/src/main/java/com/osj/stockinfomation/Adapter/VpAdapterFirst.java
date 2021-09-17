@@ -24,7 +24,7 @@ public class VpAdapterFirst extends FragmentStatePagerAdapter {
 
     public VpAdapterFirst(FragmentManager fm, Activity activity) {
         super(fm);
-        mFragmentList.add(new FragmentFirsth1Page(activity));//home
+        mFragmentList.add(new FragmentFirsth1Page(activity));//home ( 주요지수로 변경 )
         mFragmentList.add(new FragmentFirsth2Page(activity));//favo
         mFragmentList.add(new FragmentFirsth3Page(activity));//급등관련주
         mFragmentList.add(new FragmentFirsth4Page(activity));//mypage

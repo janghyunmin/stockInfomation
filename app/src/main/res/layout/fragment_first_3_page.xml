@@ -130,17 +130,20 @@
             </LinearLayout>
 
 
+
+            <!-- 중분류 하단 -->
             <LinearLayout
                 android:id="@+id/ll_page3_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="1dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:orientation="vertical"
                 android:background="@drawable/intro_login_btn_shape1"
-                android:layout_below="@+id/ll_page3_grid_view_on_off"
+                android:layout_below="@+id/gv_page3"
                 android:visibility="gone">
 
     <!--            <View-->

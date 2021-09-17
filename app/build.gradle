@@ -6,24 +6,56 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion '30.0.0'
 
     defaultConfig {
         applicationId "com.osj.stockinfomation"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.4"
         multiDexEnabled true
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs{
+        release {
+            storeFile file('C:\\Users\\Man\\gosuapp_keystore\\gosuappKey.jks')
+            storePassword "aos202!gos"
+            keyAlias "gosuappKey"
+            keyPassword "aos202!gos"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+//            signingConfig signingConfigs.release
+//            resValue ("string", "app_name", "고수의 급등주")
+//
+////            shrinkResources true    // 빌드 시 미사용 리소스 제거
+//            crunchPngs false    // 압축되지 않은 png 리소스 줄이지 않게 false
         }
+        debug {
+//            splits.abi.enable = false
+//            splits.density.enable = false
+//            resValue ("string", "app_name", "고수의 급등주_Dev")
+//
+////            shrinkResources true    // 빌드 시 미사용 리소스 제거
+//            crunchPngs false    // 압축되지 않은 png 리소스 줄이지 않게 false
+        }
+//        applicationVariants.all {
+//            variant -> variant.outputs.all {
+//                def name = "고수의 급등주"
+//                def buildType = variant.buildType.name
+//                def versionName = variant.versionName
+//                def version = defaultConfig.versionCode
+//                def date = new Date();
+//                def formattedDate = date.format('yyMMdd_HHmm')
+//                outputFileName = "${name}_${buildType}_${version}_${versionName}_${formattedDate}.apk"
+//            }
+//        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +76,23 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+//    flavorDimensions "default"
+//    productFlavors {
+//        dev {
+//            applicationId 'com.osj.stockinfomation'
+//            versionCode 4
+//            versionName '1.0.4'
+//            minSdkVersion 23    // 빌드 시 multidex 미사용하기 위해 21이상만 지원
+//            resConfigs("kr", "xxhdpi")   // 빌드 시 한가지 언어와 화면 밀도만 생성
+//        }
+//        prd {
+//            applicationId 'com.osj.stockinfomation'
+//            versionCode 4
+//            versionName '1.0.4'
+//            minSdkVersion 23
+//        }
+//    }
 }
 
 dependencies {
@@ -82,7 +131,7 @@ dependencies {
     api 'com.github.orangegangsters:swipy:1.2.3@aar'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     implementation 'org.greenrobot:eventbus:3.2.0'
-    implementation "androidx.core:core-ktx:+"
+//    implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {

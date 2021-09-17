@@ -73,18 +73,26 @@ public class FragmentFirst extends BaseFragment {
 
     protected void initView(View view) {
         try {
-        viewPager = (ViewPager)view.findViewById(R.id.vp_first);
-        tabLayout = (TabLayout)view.findViewById(R.id.tl_first);
-        adapter = new VpAdapterFirst(getActivity().getSupportFragmentManager(), activity);
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            viewPager = (ViewPager)view.findViewById(R.id.vp_first);
+            tabLayout = (TabLayout)view.findViewById(R.id.tl_first);
+            adapter = new VpAdapterFirst(getActivity().getSupportFragmentManager(), activity);
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        mPresenter = new CustomerMainPresenter();
+            mPresenter = new CustomerMainPresenter();
 
-        tabLayout.addTab(tabLayout.newTab().setText("오늘시황"));
-        tabLayout.addTab(tabLayout.newTab().setText("급등뉴스"));
-        tabLayout.addTab(tabLayout.newTab().setText("급등관련주"));
-        tabLayout.addTab(tabLayout.newTab().setText("수익인증"));
+            /** jhm 2021-09-17 오후 2:32
+             * 0917 tab name 변경
+             ***/
+//        tabLayout.addTab(tabLayout.newTab().setText("오늘시황"));
+//        tabLayout.addTab(tabLayout.newTab().setText("급등뉴스"));
+//        tabLayout.addTab(tabLayout.newTab().setText("급등관련주"));
+//        tabLayout.addTab(tabLayout.newTab().setText("수익인증"));
+
+            tabLayout.addTab(tabLayout.newTab().setText("주요지수"));
+            tabLayout.addTab(tabLayout.newTab().setText("오늘시황"));
+            tabLayout.addTab(tabLayout.newTab().setText("긴급속보"));
+            tabLayout.addTab(tabLayout.newTab().setText("급등관련주"));
 
         } catch (Exception e) {
             ErrorController.showError(e);
@@ -135,7 +143,7 @@ public class FragmentFirst extends BaseFragment {
 //            new Handler().postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-                    viewPager.setCurrentItem(event.position);
+            viewPager.setCurrentItem(event.position);
 //                }
 //            }, 100);
 

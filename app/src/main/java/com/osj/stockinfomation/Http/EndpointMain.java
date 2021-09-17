@@ -12,20 +12,35 @@ import com.osj.stockinfomation.DAO.GetNickNameDAO;
 import com.osj.stockinfomation.DAO.GetPushDetailDAO;
 import com.osj.stockinfomation.DAO.GetPushListDAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAO;
+import com.osj.stockinfomation.DAO.IndexDAO;
 import com.osj.stockinfomation.DAO.SetCategoryLikeDAO;
 import com.osj.stockinfomation.DAO.SetLikeDAO;
 import com.osj.stockinfomation.DAO.ResultMarketConditionsDAO;
 import com.osj.stockinfomation.DAO.SpotUpDAO;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory2;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory3;
+import com.osj.stockinfomation.DAO.Response;
 import com.osj.stockinfomation.DAO.VersionDAO;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface EndpointMain {
+
+
+    /** jhm 2021-09-14 오후 4:09
+     * 코스콤 API Direct
+     ***/
+    @POST("/{marketcode}/index") //코스피 코스닥 지수
+    Call<IndexDAO> getIndex(@Query("marketcode") String marketcode);
+
+
+
 
     @FormUrlEncoded
     @POST("/api/get_version.php")
@@ -49,11 +64,26 @@ public interface EndpointMain {
                            @Field("mb_2") String mb_2,
                            @Field("mb_3") String mb_3);
 
+
+    @FormUrlEncoded
+    @POST("/api/select_user.php")
+    Call<BaseDAO> getUser(@Field("mb_id") String mb_id);
+
+
+
     @FormUrlEncoded
     @POST("/api/set_user.php")
     Call<BaseDAO> setUser(@Field("mb_id") String mb_id,
                           @Field("mb_4") String mb_4,
                             @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("/api/insert_user.php")
+    Call<BaseDAO> setInsertUser(@Field("mb_id") String mb_id,
+                                @Field("mb_name") String mb_name,
+                                @Field("mb_hp") String mb_hp ,
+                                @Field("token") String token);
+
 
     @FormUrlEncoded
     @POST("/api/set_free_update.php")
@@ -63,7 +93,7 @@ public interface EndpointMain {
 
     @FormUrlEncoded
     @POST("/api/get_free_data.php")
-    Call<BaseDAO> getFreeUpdate(@Field("mb_id") String mb_id);
+    Call<Response> getFreeUpdate(@Field("mb_id") String mb_id);
 
 
     @FormUrlEncoded
@@ -113,7 +143,7 @@ public interface EndpointMain {
                                            @Field("code") String code);
 
     @FormUrlEncoded
-    @POST("/api/get_category03.php")
+    @POST("/api/get_category03_ori.php")
     Call<SpotUpDAOCategory3> getCategory03(@Field("mb_id") String mb_id,
                                            @Field("ca_id2") String ca_id,
                                            @Field("code") String code);
@@ -128,10 +158,13 @@ public interface EndpointMain {
     @POST("/api/get_like.php")
     Call<GetLikeDAO> getLike(@Field("mb_id") String mb_id);
 
-    @FormUrlEncoded
-    @POST("/api/get_check_free.php")
-    Call<GetCheckFreeDAO> getCheckFree(@Field("mb_id") String mb_id);
+//    @FormUrlEncoded
+//    @POST("/api/get_check_free.php")
+//    Call<GetCheckFreeDAO> getCheckFree(@Field("mb_id") String mb_id);
 
+    @FormUrlEncoded
+    @POST("/api/get_push_member_loop_lidingcnt.php")
+    Call<GetCheckFreeDAO> getCheckFree(@Field("mb_id") String mb_id);
 
     @FormUrlEncoded
     @POST("/api/set_category_like.php")
@@ -169,6 +202,10 @@ public interface EndpointMain {
     Call<BaseDAO> getPushDelete(@Field("mb_id") String mb_id,
                                 @Field("pu_id") String pu_id,
                                 @Field("bo_table") String bo_table);
+
+
+
+
 
     /*
     user_id : String - (유저 아이디)
