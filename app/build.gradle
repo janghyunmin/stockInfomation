@@ -101,6 +101,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -133,7 +134,25 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
 //    implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+    // jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
+    // livedata
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    // content place holder
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+
+    // line chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+
+
 }
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }

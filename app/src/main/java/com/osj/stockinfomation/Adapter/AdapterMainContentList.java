@@ -33,25 +33,57 @@ import java.util.List;
 /**
  * Created by yjk, NomadSoft.Inc on 2019-04-05.
  */
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.osj.stockinfomation.CommonCallback.CommonCallback;
+import com.osj.stockinfomation.DAO.ResultMarketConditionsDAOList;
+import com.osj.stockinfomation.MVP.CustomerMainPresenter;
+import com.osj.stockinfomation.R;
+import com.osj.stockinfomation.util.ErrorController;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+/**
+ * Created by yjk, NomadSoft.Inc on 2019-04-05.
+ */
 public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMainContentList.ItemViewHolder, ResultMarketConditionsDAOList> {
 
     private Activity activity;
     onClickCallback onClick;
     String contentType;
     CustomerMainPresenter.FavClick fav;
-    int type; // 1tab / 2tab 비교 변수
 
     public interface onClickCallback {
         void onClick(ResultMarketConditionsDAOList item, String contentType);
     }
 
-    public AdapterMainContentList(int type,Activity mContext, List<ResultMarketConditionsDAOList> data, String contentType, onClickCallback onClick, CustomerMainPresenter.FavClick fav) {
+    public AdapterMainContentList(Activity mContext, List<ResultMarketConditionsDAOList> data, String contentType, onClickCallback onClick, CustomerMainPresenter.FavClick fav) {
         super(mContext, data);
         this.activity = mContext;
         this.contentType = contentType;
         this.onClick = onClick;
         this.fav = fav;
-        this.type = type;
     }
 
 
@@ -59,7 +91,7 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_maincontent_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_maincontent_row_old, parent, false);
         return new ItemViewHolder(view);
     }
 
@@ -68,23 +100,7 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
 
         try {
             ResultMarketConditionsDAOList item = data.get(position);
-            /** jhm 2021-08-31 오후 6:31 
-             * 이미지 삭제
-             ***/
-            if(type == 1 ){
-                holder.iv_maincontent_row.setVisibility(View.GONE);
-                /** jhm 2021-08-31 오후 6:46
-                 * 게시일 날짜 추가 split
-                 ***/
-                String date = item.getWrDatetime();
-                String result = date.substring(0,10);
-                holder.txt_maincontent_view_date.setText(result);
-            }else {
-                holder.iv_maincontent_row.setVisibility(View.VISIBLE);
-                Glide.with(activity).load(item.getWrFile()).asBitmap().into(holder.iv_maincontent_row);
-                holder.txt_maincontent_view_date.setVisibility(View.GONE);
-            }
-
+            Glide.with(activity).load(item.getWrFile()).asBitmap().into(holder.iv_maincontent_row);
             holder.txt_maincontent_title.setText(item.getLabel() + " " + item.getWrSubject());
 
             String content = holder.txt_maincontent_title.getText().toString();
@@ -112,10 +128,6 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
 
             holder.iv_maincontent_fav.setTag(position);
             holder.itemView.setTag(position);
-
-
-
-
 //            holder.iv_maincontent_row.setTag(R.string.common_google_play_services_enable_button, position);
 //            holder.ll__maincontent.setTag(position);
 
@@ -132,7 +144,6 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
         private TextView txt_maincontent_fav_count;
         private TextView txt_maincontent_view_count;
         private LinearLayout ll__maincontent;
-        private TextView txt_maincontent_view_date;
 
         public ItemViewHolder(@NonNull View view) {
             super(view);
@@ -143,7 +154,6 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
             txt_maincontent_fav_count = (TextView)view.findViewById(R.id.txt_maincontent_fav_count);
             txt_maincontent_view_count = (TextView)view.findViewById(R.id.txt_maincontent_view_count);
             ll__maincontent = (LinearLayout)view.findViewById(R.id.ll__maincontent);
-            txt_maincontent_view_date = (TextView) view.findViewById(R.id.txt_maincontent_view_date);
 
             try {
 
@@ -182,3 +192,4 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
     }
 
 }
+

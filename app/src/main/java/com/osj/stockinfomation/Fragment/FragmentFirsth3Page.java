@@ -2,6 +2,7 @@ package com.osj.stockinfomation.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,15 +29,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.osj.stockinfomation.Adapter.AdapterCategoryLikeFavContentList;
 import com.osj.stockinfomation.Adapter.AdapterGridPage3Category2ContentList;
 import com.osj.stockinfomation.Adapter.AdapterGridPage3ContentList;
+import com.osj.stockinfomation.Adapter.AdapterMainContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainSpotContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainpage3Cagegory2ContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainpage3ContentList;
 import com.osj.stockinfomation.C.C;
 import com.osj.stockinfomation.CommonCallback.CommonCallback;
 import com.osj.stockinfomation.DAO.GetCategoryLikeFavDAO;
+import com.osj.stockinfomation.DAO.GetContentsViewType2DAO;
+import com.osj.stockinfomation.DAO.ResultMarketConditionsDAO;
+import com.osj.stockinfomation.DAO.ResultMarketConditionsDAOList;
 import com.osj.stockinfomation.DAO.SetCategoryLikeDAO;
 import com.osj.stockinfomation.DAO.SetLikeDAO;
 import com.osj.stockinfomation.DAO.SpotUpDAO;
@@ -55,8 +62,13 @@ import com.osj.stockinfomation.databinding.FragmentFirst3PageBinding;
 import com.osj.stockinfomation.util.ErrorController;
 import com.osj.stockinfomation.util.LogUtil;
 import com.osj.stockinfomation.util.MessageEvent;
+import com.osj.stockinfomation.util.PagingUtil;
+import com.osj.stockinfomation.util.RecyclerDecoration;
 import com.osj.stockinfomation.util.Spacing;
 import com.osj.stockinfomation.util.SpacingGrid3;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,43 +80,15 @@ import java.util.List;
 
 public class FragmentFirsth3Page extends BaseFragment {
 
+
+    AdapterMainContentList adapterMainContentList;
+
     private CustomerMainPresenter mPresenter;
     private Activity activity;
-    SpotUpDAO category1result;
-
-    TextView tv_page3_tab1;
-    TextView tv_page3_tab2;
-
-    TextView txt_page3_subtitle1;
-    TextView txt_page3_subtitle2;
-    TextView txt_page3_middle;
-    TextView txt_page3_middle1;
-
-    RecyclerView gv_page3;
-    RecyclerView gv_page3_category2;
-    RecyclerView gv_page3_category22;
-    RecyclerView rc_page3_tab2;
-
-    String ca_id2 = null;
-    NestedScrollView nestedScrollView;
-
-    LinearLayout ll_page3_lately;
-    RelativeLayout ll_page3_middle;
-//    View view_page3_line;
-    LinearLayout ll_page3_grid;
-    LinearLayout ll_page3_tab1;
-    RelativeLayout rl_fragment_first3_no_result;
-    RelativeLayout rl_fragment_first3;
-
-    AdapterMainpage3ContentList adapterGridPage3ContentList;
-    AdapterMainpage3Cagegory2ContentList adapterMainpage3Cagegory2ContentList;
-    AdapterMainpage3Cagegory2ContentList adapterMainpage3Cagegory22ContentList;
-    AdapterCategoryLikeFavContentList adapterCategoryLikeFavContentList;
-
-    LinearLayout ll_page3_grid_view_on_off;
-    TextView txt_page3_grid_view_on_off;
-    ImageView iv_page3_grid_view_on_off;
-
+    RecyclerView recyclerView;
+    private NestedScrollView nestedScrollView;
+    private SwipyRefreshLayout swipeRefreshLayout;
+    YouTubePlayerView youtube;
     AlertDialog alertDialog = null;
 
     public FragmentFirsth3Page(Activity activity){
@@ -115,11 +99,10 @@ public class FragmentFirsth3Page extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_first_3_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_first_2_page, container, false);
         initView(view);
         setEvent();
-        SpotUpDAOList spotUpDAOList = new SpotUpDAOList();
-        loadData(1, spotUpDAOList.getCaId(), "", "");
+        loadData(true);
         try {
             if(EventBus.getDefault().isRegistered(this)){
                 EventBus.getDefault().unregister(this);
@@ -135,47 +118,15 @@ public class FragmentFirsth3Page extends BaseFragment {
 
     protected void initView(View view) {
         try {
+
             mPresenter = new CustomerMainPresenter();
 
-            tv_page3_tab1 = (TextView)view.findViewById(R.id.tv_page3_tab1);
-            tv_page3_tab2 = (TextView)view.findViewById(R.id.tv_page3_tab2);
-
-            txt_page3_subtitle1 = (TextView)view.findViewById(R.id.txt_page3_subtitle1);
-            txt_page3_subtitle2 = (TextView)view.findViewById(R.id.txt_page3_subtitle2);
-            txt_page3_middle = (TextView)view.findViewById(R.id.txt_page3_middle);
-            txt_page3_middle1 = (TextView)view.findViewById(R.id.txt_page3_middle1);
-            nestedScrollView = (NestedScrollView)view.findViewById(R.id.nestedScrollView);
-
-            ll_page3_middle = (RelativeLayout) view.findViewById(R.id.ll_page3_middle);
-            ll_page3_lately = (LinearLayout)view.findViewById(R.id.ll_page3_lately);
-            ll_page3_grid = (LinearLayout)view.findViewById(R.id.ll_page3_grid);
-            ll_page3_tab1 = (LinearLayout)view.findViewById(R.id.ll_page3_tab1);
-            rl_fragment_first3_no_result = (RelativeLayout)view.findViewById(R.id.rl_fragment_first3_no_result);
-            rl_fragment_first3 = (RelativeLayout)view.findViewById(R.id.rl_fragment_first3);
-
-            //ll_page3_grid_view_on_off = (LinearLayout)view.findViewById(R.id.ll_page3_grid_view_on_off);
-           // txt_page3_grid_view_on_off = (TextView)view.findViewById(R.id.txt_page3_grid_view_on_off);
-           // iv_page3_grid_view_on_off = (ImageView)view.findViewById(R.id.iv_page3_grid_view_on_off);
-
-            Spacing spaceDecoration = new Spacing(C.recyclerViewItemDepth, C.recyclerViewItemDepth);
-            SpacingGrid3 spaceDecoration3 = new SpacingGrid3(C.recyclerViewItemDepth, C.recyclerViewItemDepth);
-
-            gv_page3 = (RecyclerView)view.findViewById(R.id.gv_page3);
-            this.gv_page3.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            gv_page3.addItemDecoration(spaceDecoration3);
-
-            gv_page3_category2 = (RecyclerView)view.findViewById(R.id.gv_page3_category2);
-            this.gv_page3_category2.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            gv_page3_category2.addItemDecoration(spaceDecoration3);
-
-            gv_page3_category22 = (RecyclerView)view.findViewById(R.id.gv_page3_category22);
-            this.gv_page3_category22.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            gv_page3_category22.addItemDecoration(spaceDecoration3);
-
-            rc_page3_tab2 = (RecyclerView)view.findViewById(R.id.rc_page3_tab2);
-            rc_page3_tab2.setLayoutManager(new LinearLayoutManager(getContext()));
-
-//            view_page3_line = (View)view.findViewById(R.id.view_page3_line);
+            this.recyclerView = (RecyclerView) view.findViewById(R.id.rc_maincontent);
+            this.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            RecyclerDecoration spaceDecoration = new RecyclerDecoration(C.recyclerViewItemDepth);
+            recyclerView.addItemDecoration(spaceDecoration);
+            this.swipeRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+            this.nestedScrollView = (NestedScrollView) view.findViewById(R.id.nestedScrollView);
 
             setProgress((ProgressBar)view.findViewById(R.id.progress));
 
@@ -186,209 +137,23 @@ public class FragmentFirsth3Page extends BaseFragment {
 
     protected void setEvent() {
         try {
-            tv_page3_tab1.setOnClickListener(new View.OnClickListener() {
+            this.swipeRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onClick(View view) {
-                    tv_page3_tab1.setTextColor(Color.parseColor("#000000"));
-                    tv_page3_tab2.setTextColor(Color.parseColor("#999999"));
-
-                    tv_page3_tab1.setBackgroundColor(Color.parseColor("#ffffff"));
-                    tv_page3_tab2.setBackgroundColor(Color.parseColor("#F3F4F7"));
-
-                    ll_page3_tab1.setVisibility(View.VISIBLE);
-                    rl_fragment_first3.setVisibility(View.GONE);
+                public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                    if (direction == SwipyRefreshLayoutDirection.TOP) {
+                        loadData(true);
+                    } else {
+                        loadData(false);
+                    }
                 }
             });
 
-            tv_page3_tab2.setOnClickListener(new View.OnClickListener() {
+            PagingUtil.onRefreshForNested(nestedScrollView, recyclerView, swipeRefreshLayout, new PagingUtil.onPaging() {
                 @Override
-                public void onClick(View view) {
-                    tv_page3_tab1.setTextColor(Color.parseColor("#999999"));
-                    tv_page3_tab2.setTextColor(Color.parseColor("#000000"));
-
-                    tv_page3_tab1.setBackgroundColor(Color.parseColor("#F3F4F7"));
-                    tv_page3_tab2.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-                    ll_page3_tab1.setVisibility(View.GONE);
-                    rl_fragment_first3.setVisibility(View.VISIBLE);
-
-                    showProgress();
-                    mPresenter.getCategoryLike(activity, new CommonCallback.SingleObjectCallback<GetCategoryLikeFavDAO>() {
-                        @Override
-                        public void onSuccess(GetCategoryLikeFavDAO result) {
-                            hideProgress();
-
-                            if(result.getList().size() == 0)
-                                rl_fragment_first3_no_result.setVisibility(View.VISIBLE);
-                            else
-                                rl_fragment_first3_no_result.setVisibility(View.GONE);
-
-                            adapterCategoryLikeFavContentList = new AdapterCategoryLikeFavContentList(activity, result.getList(), "Like", new AdapterCategoryLikeFavContentList.SpotCallBack() {
-                                @Override
-                                public void onMore(int position) {
-                                    Intent intent = new Intent(activity, BrowserActivity.class);
-                                    intent.putExtra("data", adapterCategoryLikeFavContentList.getData().get(position).getCode());
-                                    intent.putExtra("openType", "search");
-
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public void onTitleClick(String title) {
-                                    Intent intent = new Intent(activity, BrowserActivity.class);
-                                    intent.putExtra("data", title);
-                                    intent.putExtra("openType", "data");
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public void onDelete(int position) {
-                                    showCustomAlert(activity, "즐겨찾기를 해제하시겠습니까?", "즐겨찾기된 컨텐츠가 목록에서 사라집니다.", true, R.drawable.img_alert_error, 2, "", "", null, new BaseActivity.OnClickListener() {
-                                        @Override
-                                        public void onClick() {
-                                            mPresenter.setCategoryLike(activity, adapterCategoryLikeFavContentList.getData().get(position).getCaId2(), adapterCategoryLikeFavContentList.getData().get(position).getCaId3(), new CommonCallback.SingleObjectCallback<SetCategoryLikeDAO>() {
-                                                @Override
-                                                public void onSuccess(SetCategoryLikeDAO result1) {
-                                                    hideProgress();
-                                                    adapterCategoryLikeFavContentList.getData().remove(position);
-                                                    adapterCategoryLikeFavContentList.notifyDataSetChanged();
-
-                                                    String message = getString(R.string.page1_fav_off);
-                                                    showCustomAlert(activity, message, "", true, R.drawable.img_alert_ok, 1, "", "", null, null);
-
-                                                    if(adapterCategoryLikeFavContentList.getData().size() == 0)
-                                                        rl_fragment_first3_no_result.setVisibility(View.VISIBLE);
-                                                    else
-                                                        rl_fragment_first3_no_result.setVisibility(View.GONE);
-                                                }
-
-                                                @Override
-                                                public void onFailed(String fault) {
-                                                    hideProgress();
-                                                    showCustomAlert(activity, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
-                                                }
-                                            });
-
-                                        }
-                                    });
-
-                                }
-                            });
-                            rc_page3_tab2.setAdapter(adapterCategoryLikeFavContentList);
-
-                        }
-
-                        @Override
-                        public void onFailed(String fault) {
-                            hideProgress();
-                            showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
-                        }
-                    });
+                public void onPaging() {
+                    loadData(false);
                 }
             });
-
-            txt_page3_subtitle1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    txt_page3_subtitle1.setTextColor(Color.parseColor("#C50000"));
-                    txt_page3_subtitle2.setTextColor(Color.parseColor("#999999"));
-
-//                    ll_page3_middle.setVisibility(View.VISIBLE);
-                    nestedScrollView.setVisibility(View.VISIBLE);
-                    ll_page3_lately.setVisibility(View.GONE);
-                }
-            });
-
-            txt_page3_subtitle2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    txt_page3_subtitle1.setTextColor(Color.parseColor("#999999"));
-                    txt_page3_subtitle2.setTextColor(Color.parseColor("#C50000"));
-
-//                    ll_page3_middle.setVisibility(View.GONE);
-                    nestedScrollView.setVisibility(View.GONE);
-                    ll_page3_lately.setVisibility(View.VISIBLE);
-
-                    showProgress();
-                    mPresenter.getLatelyCategory(activity, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
-                        @Override
-                        public void onSuccess(SpotUpDAOCategory2 result) {
-                            hideProgress();
-                            txt_page3_middle1.setVisibility(View.VISIBLE);
-
-                            if (result != null) {
-                                adapterMainpage3Cagegory22ContentList = new AdapterMainpage3Cagegory2ContentList(activity, result.getList(), item -> {
-                                    loadData(3, item.getCaId(), item.getCode(), item.getCodeName());
-                                    ca_id2 = item.getCaId();
-                                });
-
-                                gv_page3_category22.setAdapter(adapterMainpage3Cagegory22ContentList);
-                            }
-                        }
-
-                        @Override
-                        public void onFailed(String fault) {
-                            hideProgress();
-                            showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
-                        }
-                    });
-                }
-            });
-
-//            ll_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
-//                        adapterGridPage3ContentList.setData(category1result.getList());
-//                        adapterGridPage3ContentList.notifyDataSetChanged();
-//
-//                        txt_page3_grid_view_on_off.setText("접기");
-//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
-//                    } else {
-//                        List<SpotUpDAOList> tempList = new ArrayList<>();
-//
-//                        for(int i = 0; i < category1result.getList().size(); i++){
-//                            if(i < 6)
-//                                tempList.add(category1result.getList().get(i));
-//                            else break;
-//                        }
-//
-//                        adapterGridPage3ContentList.setData(tempList);
-//                        adapterGridPage3ContentList.notifyDataSetChanged();
-//
-//                        txt_page3_grid_view_on_off.setText("펼쳐보기");
-//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
-//                    }
-//                }
-//            });
-
-//            txt_page3_grid_view_on_off.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(txt_page3_grid_view_on_off.getText().equals("펼쳐보기")){
-//                        adapterGridPage3ContentList.setData(category1result.getList());
-//                        adapterGridPage3ContentList.notifyDataSetChanged();
-//
-//                        txt_page3_grid_view_on_off.setText("접기");
-//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full_down);
-//                    } else {
-//                        List<SpotUpDAOList> tempList = new ArrayList<>();
-//
-//                        for(int i = 0; i < category1result.getList().size(); i++){
-//                            if(i < 6)
-//                                tempList.add(category1result.getList().get(i));
-//                            else break;
-//                        }
-//
-//                        adapterGridPage3ContentList.setData(tempList);
-//                        adapterGridPage3ContentList.notifyDataSetChanged();
-//
-//                        txt_page3_grid_view_on_off.setText("펼쳐보기");
-//                        iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
-//                    }
-//                }
-//            });
-
         } catch (Exception e) {
             ErrorController.showError(e);
         }
@@ -398,236 +163,212 @@ public class FragmentFirsth3Page extends BaseFragment {
     public void onBackPressed() {
         if(alertDialog != null){
             alertDialog.dismiss();
-            alertDialog = null;
-            C.backIndex = false;
+            youtube.release();
 
-//            Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    C.backIndex = false;
-//                }
-//            }, 100);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    C.backIndex = false;
+                }
+            }, 100);
         }
+
     }
 
-    public void loadData(int isFirst, String ca_id, String code, String code_Name) {
-        switch (isFirst){
-            case 1:
-                showProgress();
-                txt_page3_subtitle1.setTextColor(Color.parseColor("#C50000"));
-                txt_page3_subtitle2.setTextColor(Color.parseColor("#999999"));
-                ll_page3_middle.setVisibility(View.VISIBLE);
-                ll_page3_lately.setVisibility(View.GONE);
-                ll_page3_grid.setVisibility(View.GONE);
-                tv_page3_tab1.setTextColor(Color.parseColor("#000000"));
-                tv_page3_tab2.setTextColor(Color.parseColor("#999999"));
-                tv_page3_tab1.setBackgroundColor(Color.parseColor("#ffffff"));
-                tv_page3_tab2.setBackgroundColor(Color.parseColor("#F3F4F7"));
-                ll_page3_tab1.setVisibility(View.VISIBLE);
-                rl_fragment_first3.setVisibility(View.GONE);
-                mPresenter.getCategory01(Util_osj.getAndroidId(activity), new CommonCallback.SingleObjectCallback<SpotUpDAO>() {
-                    @Override
-                    public void onSuccess(SpotUpDAO result) {
-                        hideProgress();
-                        category1result = result;
+    public void loadData(boolean isFirst) {
+        showProgress();
+        mPresenter.loadList(isFirst, getActivity(), "contents02", new CommonCallback.SingleObjectCallback<ResultMarketConditionsDAO>() {
+            @Override
+            public void onSuccess(ResultMarketConditionsDAO result) {
+                hideProgress();
 
-                        LogUtil.logE("result " + result.getList().size());
-                        List<SpotUpDAOList> tempList = new ArrayList<>();
-                        for(int i = 0; i < result.getList().size(); i++){
-                              tempList.add(result.getList().get(i));
-                            }
-                        adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, tempList, new AdapterMainpage3ContentList.onClickCallback() {
+                if (result.getList() != null && result.getList().size() > 0) {
+                    if (isFirst) {
+                        adapterMainContentList = new AdapterMainContentList(activity, result.getList(), "contents02", new AdapterMainContentList.onClickCallback() {
                             @Override
-                            public void onClick(SpotUpDAOList item) {
-                                loadData(2, item.getCaId(), item.getCode(),"");
-                                ll_page3_grid.setVisibility(View.VISIBLE);
-                                txt_page3_middle.setText(item.getCodeName());
+                            public void onClick(ResultMarketConditionsDAOList item, String contentType) {
+                                showProgress();
+                                mPresenter.getContentViewType2(activity, contentType, item.getWrId(), new CommonCallback.SingleObjectCallback<GetContentsViewType2DAO>() {
+                                    @Override
+                                    public void onSuccess(GetContentsViewType2DAO result1) {
+                                        hideProgress();
+                                        for(int i = 0; i < adapterMainContentList.getData().size(); i++){
+                                            if(adapterMainContentList.getData().get(i).getWrId().equals(result1.getWrId())){
+                                                adapterMainContentList.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrHit()) + 1));
+                                                adapterMainContentList.notifyDataSetChanged();
+                                            }
+                                        }
+
+                                        showModalView(result1);
+                                    }
+
+                                    @Override
+                                    public void onFailed(String fault) {
+                                        hideProgress();
+                                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+                                    }
+                                });
+                            }
+                        }, new CustomerMainPresenter.FavClick() {
+                            @Override
+                            public void FavClick(ResultMarketConditionsDAOList item) {
+                                showProgress();
+                                mPresenter.setLike(activity, item.getWrId(), item.getBoTable(), new CommonCallback.SingleObjectCallback<SetLikeDAO>() {
+                                    @Override
+                                    public void onSuccess(SetLikeDAO result1) {
+                                        hideProgress();
+                                        String message = "";
+                                        if (result1.getWrLike().toLowerCase().equals("n")) {
+                                            message = getString(R.string.page1_fav_off);
+                                        } else {
+                                            message = getString(R.string.page1_fav_on);
+                                        }
+
+                                        for(int i = 0; i < adapterMainContentList.getData().size(); i++){
+                                            if(adapterMainContentList.getData().get(i).getWrId().equals(item.getWrId())){
+                                                adapterMainContentList.getData().get(i).setLikeCheck(result1.getWrLike());
+                                                if (result1.getWrLike().toLowerCase().equals("n"))
+                                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) - 1));
+                                                else
+                                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) + 1));
+                                            }
+                                        }
+                                        adapterMainContentList.notifyDataSetChanged();
+                                        showCustomAlert(activity, message , getString(R.string.page1_fav_subtitle), false, R.drawable.img_alert_error, 1, "", "", null, null);
+                                    }
+
+                                    @Override
+                                    public void onFailed(String fault) {
+                                        hideProgress();
+                                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+                                    }
+                                });
                             }
                         });
-                        gv_page3.setAdapter(adapterGridPage3ContentList);
-//                        if(result.getList().size() > 6){
-//                            ll_page3_grid_view_on_off.setVisibility(View.VISIBLE);
-//                            txt_page3_grid_view_on_off.setText("펼쳐보기");
-//                            iv_page3_grid_view_on_off.setBackgroundResource(R.drawable.img_grid_full);
+                        recyclerView.setAdapter(adapterMainContentList);
+                    } else {
+                        adapterMainContentList.addAll(result.getList());
+                        adapterMainContentList.notifyDataSetChanged();
+                    }
+                } else {
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailed(String fault) {
+                hideProgress();
+                showCustomAlert(activity, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+
+//        mPresenter.loadList(isFirst, getActivity(), "contents02", new CommonCallback.SingleObjectCallback<AdapterMainContentList>() {
+//            @Override
+//            public void onSuccess(AdapterMainContentList result) {
+//                hideProgress();
+//                if (result != null) {
+//                    recyclerView.setAdapter(result);
+//                }
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
 //
-//                            List<SpotUpDAOList> tempList = new ArrayList<>();
+//            @Override
+//            public void onFailed(String fault) {
+//                hideProgress();
+//                showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        }, new CustomerMainPresenter.RowClick() {
+//            @Override
+//            public void rowClick(ResultMarketConditionsDAOList item, String contentType) {
+//                showProgress();
+//                mPresenter.getContentViewType2(activity, contentType, item.getWrId(), new CommonCallback.SingleObjectCallback<GetContentsViewType2DAO>() {
+//                    @Override
+//                    public void onSuccess(GetContentsViewType2DAO result) {
+//                        hideProgress();
+//                        showModalView(result);
+//                    }
 //
-//                            for(int i = 0; i < result.getList().size(); i++){
-//                                if(i < 6)
-//                                    tempList.add(result.getList().get(i));
-//                                else break;
-//                            }
+//                    @Override
+//                    public void onFailed(String fault) {
+//                        hideProgress();
+//                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+//                    }
+//                });
+//            }
 //
-//                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, tempList, new AdapterMainpage3ContentList.onClickCallback() {
-//                                @Override
-//                                public void onClick(SpotUpDAOList item) {
+//            @Override
+//            public void rowCLick(ResultMarketConditionsDAOList item) {
 //
-//                                    loadData(2, item.getCaId(), item.getCode(),"");
-////                                    txt_page3_middle.setVisibility(View.VISIBLE);
-//                                    ll_page3_grid.setVisibility(View.VISIBLE);
-//                                    txt_page3_middle.setText(item.getCodeName());
-//                                }
-//                            });
+//            }
+//        }, new CustomerMainPresenter.FavClick() {
+//            @Override
+//            public void FavClick(ResultMarketConditionsDAOList item) {
+//                showProgress();
+//                mPresenter.setLike(activity, item.getWrId(), item.getBoTable(), new CommonCallback.SingleObjectCallback<SetLikeDAO>() {
+//                    @Override
+//                    public void onSuccess(SetLikeDAO result1) {
+//                        hideProgress();
+//                        String message = "";
+//                        if (result1.getWrLike().toLowerCase().equals("n")) {
+//                            message = getString(R.string.page1_fav_off);
 //                        } else {
-//                            ll_page3_grid_view_on_off.setVisibility(View.GONE);
-//
-//                            adapterGridPage3ContentList = new AdapterMainpage3ContentList(activity, result.getList(), new AdapterMainpage3ContentList.onClickCallback() {
-//                                @Override
-//                                public void onClick(SpotUpDAOList item) {
-//
-//                                    loadData(2, item.getCaId(), item.getCode(),"");
-////                                    txt_page3_middle.setVisibility(View.VISIBLE);
-//                                    ll_page3_grid.setVisibility(View.VISIBLE);
-//                                    txt_page3_middle.setText(item.getCodeName());
-//                                }
-//                            });
+//                            message = getString(R.string.page1_fav_on);
 //                        }
-//                        gv_page3.setAdapter(adapterGridPage3ContentList);
-                    }
-
-                    @Override
-                    public void onFailed(String fault) {
-                        hideProgress();
-                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
-                    }
-                });
-                break;
-            case 2:
-                showProgress();
-                mPresenter.getCategory02(ca_id, code, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory2>() {
-                    @Override
-                    public void onSuccess(SpotUpDAOCategory2 result) {
-                        hideProgress();
-                        if(result.getList().size() == 0){
-//                            txt_page3_middle.setVisibility(View.GONE);
-//                            view_page3_line.setVisibility(View.GONE);
-                            ll_page3_grid.setVisibility(View.GONE);
-                        }
-                        if (result != null) {
-                            adapterMainpage3Cagegory2ContentList = new AdapterMainpage3Cagegory2ContentList(activity, result.getList(), new AdapterMainpage3Cagegory2ContentList.onClickCallback() {
-                                @Override
-                                public void onClick(SpotUpDAOListCategory2 item) {
-                                    loadData(3, item.getCaId(), item.getCode(), item.getCodeName());
-                                    ca_id2 = item.getCaId();
-                                }
-                            });
-
-                            gv_page3_category2.setAdapter(adapterMainpage3Cagegory2ContentList);
-
-                            nestedScrollView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    nestedScrollView.fullScroll(NestedScrollView.FOCUS_DOWN);
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailed(String fault) {
-                        hideProgress();
-                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
-                    }
-                });
-                break;
-            case 3:
-                showProgress();
-                mPresenter.getCategory03(activity, ca_id, code, new CommonCallback.SingleObjectCallback<SpotUpDAOCategory3>() {
-                    @Override
-                    public void onSuccess(SpotUpDAOCategory3 result) {
-                        hideProgress();
-                        showModalView(result, code_Name);
-                    }
-
-                    @Override
-                    public void onFailed(String fault) {
-                        hideProgress();
-                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
-                    }
-                });
-                break;
-        }
+//
+//                        mPresenter.adapterMainContentListNotifyDataSetChanged(item.getWrId(), result1.getWrLike());
+//                        showCustomAlert(activity, message , getString(R.string.page1_fav_subtitle), false, R.drawable.img_alert_error, 1, "", "", null, null);
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String fault) {
+//                        hideProgress();
+//                        showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+//                    }
+//                });
+//            }
+//        });
     }
 
-    AdapterMainSpotContentList adapterMainSpotContentList;
-    RecyclerView recyclerView;
-
-    private void showModalView(SpotUpDAOCategory3 result, String code_Name){
-        C.backIndex = true;
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_category3, null);
+    private void showModalView(GetContentsViewType2DAO result){
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_category2, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
         builder.setView(dialogView);
 
         alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
-        ((TextView)alertDialog.findViewById(R.id.txt_category3)).setText(code_Name);
+        youtube = (YouTubePlayerView)alertDialog.findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youtube);
 
-        ((ImageView)alertDialog.findViewById(R.id.iv_category3_close)).setOnClickListener(new View.OnClickListener() {
+        youtube.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = result.getWrLink1();
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                alertDialog = null;
+                youtube.release();
                 C.backIndex = false;
             }
         });
 
-        recyclerView = (RecyclerView)alertDialog.findViewById(R.id.rc_category3);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterMainSpotContentList = new AdapterMainSpotContentList(activity, result.getList(), "Modal", new AdapterMainSpotContentList.SpotCallBack() {
-            @Override
-            public void onMore(int position) {
-                Intent intent = new Intent(activity, BrowserActivity.class);
-                intent.putExtra("data", adapterMainSpotContentList.getData().get(position).getCode());
-                intent.putExtra("openType", "search");
+        C.backIndex = true;
+    }
 
-                startActivity(intent);
-            }
-
-            @Override
-            public void onTitleClick(String title) {
-                Intent intent = new Intent(activity, BrowserActivity.class);
-                intent.putExtra("data", title);
-                intent.putExtra("openType", "data");
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFav(int position) {
-                showProgress();
-                mPresenter.setCategoryLike(activity, ca_id2, result.getList().get(position).getCaId3(), new CommonCallback.SingleObjectCallback<SetCategoryLikeDAO>() {
-                    @Override
-                    public void onSuccess(SetCategoryLikeDAO result1) {
-                        hideProgress();
-                        adapterMainSpotContentList.getData().get(position).setLikeYn(result1.getWrLike());
-                        adapterMainSpotContentList.notifyDataSetChanged();
-
-                        String message;
-                        if(result1.getWrLike().toLowerCase().equals("n"))
-                            message = getString(R.string.page3_fav_off_title);
-                        else
-                            message = getString(R.string.page3_fav_on_title);
-
-                        showCustomAlert(activity, message, getString(R.string.page3_fav_subtitle), false, R.drawable.img_alert_error, 1, "", "", null, null);
-                    }
-
-                    @Override
-                    public void onFailed(String fault) {
-                        hideProgress();
-                        showCustomAlert(activity, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
-                    }
-                });
-            }
-
-            @Override
-            public void onDelete(int position) {
-
-            }
-        });
-        recyclerView.setAdapter(adapterMainSpotContentList);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
@@ -643,13 +384,16 @@ public class FragmentFirsth3Page extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
-        if(event.position == 13){
-            SpotUpDAOList spotUpDAOList = new SpotUpDAOList();
-            loadData(1, spotUpDAOList.getCaId(), "", "");
+        if(event.position == 12){
+            loadData(true);
         }
     }
+
+    //showCustomAlert(activity, "", fault, true , R.drawable.img_alert_error, 1, "", "" , null, null);
+
 }

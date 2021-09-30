@@ -69,4 +69,13 @@
 
 
 
+    <color name="c_CEA1B4DC">#CEA1B4DC</color>
+    <color name="tt">#E1000B51</color>
+    <color name="c_red">#F14343</color>
+    <color name="c_blue">#648CFB</color>
+    <color name="c_back">#5BFFFFFF</color>
+    <color name="test">#CEFF66A4</color>
+    <color name="test1">#CEFF2450</color>
+
+
 </resources>

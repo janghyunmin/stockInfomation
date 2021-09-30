@@ -1,75 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f2f3f6">
-
-    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
-        app:srl_direction="both">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
+        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:nestedScrollingEnabled="true"
+            >
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_maincontent"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#F2F3F6"
-                android:padding="10dp">
+                android:fillViewport="true">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.core.widget.NestedScrollView>
-    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    >
+                    <ViewFlipper
+                        android:id="@+id/banner"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        />
 
-    <RelativeLayout
-        android:id="@+id/rl_fragment_sec_no_result"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        >
+                    <ImageView
+                        android:id="@+id/r_img"
+                        app:layout_constraintTop_toBottomOf="@+id/banner"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/professional"
+                        />
+                    <TextView
+                        android:id="@+id/text"
+                        app:layout_constraintTop_toTopOf="@+id/r_img"
+                        app:layout_constraintBottom_toBottomOf="@+id/r_img"
+                        app:layout_constraintLeft_toRightOf="@+id/r_img"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전문가 종목 수익 현황"
+                        android:textColor="@color/black"
+                        />
 
-        <ImageView
-            android:id="@+id/iv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/img_fav_no_result"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"/>
+                    <TextView
+                        android:id="@+id/accumulate"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/r_img"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_width="145dp"
+                        android:layout_height="200dp"
+                        android:background="@drawable/frasec_item_layout"
+                        android:text="누적 수익 성공\n 2,612 건"
+                        android:textStyle="normal"
+                        android:textSize="13dp"
+                        android:gravity="center"
+                        android:textColor="@color/c_000000"
+                        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv1"
-            android:text="확인된 즐겨찾기가 없습니다."
-            android:layout_centerHorizontal="true"/>
+                    <TextView
+                        android:id="@+id/pick"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/r_img"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_width="145dp"
+                        android:layout_height="200dp"
+                        android:background="@drawable/frasec_item_layout"
+                        android:text="최대 수익 종목\n 삼성전자 누적 \n+87%"
+                        android:textStyle="normal"
+                        android:textSize="13dp"
+                        android:gravity="center"
+                        android:textColor="@color/c_000000"
+                        />
 
-    </RelativeLayout>
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/accumulate"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="#e5e5e5"
+                        android:layout_below="@+id/rl1"
+                        />
 
-    <include
-        android:id="@+id/ic_today_tlghkd"
-        layout="@layout/include_like_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"/>
+                    <LinearLayout
+                        android:id="@+id/tab_btn"
+                        app:layout_constraintTop_toBottomOf="@+id/view1"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
 
-</RelativeLayout>
+                        <Button
+                            android:id="@+id/btn_left"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/c_d2191f"
+                            android:layout_weight="1"
+                            android:text="누적"
+                            android:textColor="#ffffff"
+                            >
+
+                        </Button>
+
+                        <Button
+                            android:id="@+id/btn_right"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/f4f4f4"
+                            android:layout_weight="1"
+                            android:text="실시간"
+                            android:textColor="@color/black">
+
+                        </Button>
+                    </LinearLayout>
+
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tab_btn"
+                        android:layout_height="40dp"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        />
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewPager"
+                        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:visibility="visible"
+                        >
+
+
+                    </androidx.viewpager.widget.ViewPager>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

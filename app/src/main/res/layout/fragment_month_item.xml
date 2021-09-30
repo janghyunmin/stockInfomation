@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/stock_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삼성전자"
+        android:textColor="@color/black"
+        android:fontFamily="@font/custom_font"
+        android:textSize="13dp"
+        />
+    <TextView
+        android:id="@+id/m_status"
+        app:layout_constraintTop_toBottomOf="@+id/stock_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:padding="3dp"
+        android:gravity="center"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/custom_font"
+        android:text="매수"
+        android:background="@color/c_c50000"
+        android:textColor="@color/c_ffffff"
+        />
+
+    <TextView
+        android:id="@+id/buy_price_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/stock_name"
+        android:fontFamily="@font/custom_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="매수가"
+        />
+
+    <TextView
+        android:id="@+id/buy_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/buy_price_text"
+        app:layout_constraintTop_toBottomOf="@+id/buy_price_text"
+        android:fontFamily="@font/custom_font"
+        android:text="76,600"
+        android:textSize="17dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/per_text"
+        app:layout_constraintTop_toTopOf="@+id/buy_price_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/custom_font"
+        android:layout_marginEnd="20dp"
+        android:text="수익률"
+        android:textSize="13sp"
+        />
+
+    <TextView
+        android:id="@+id/per"
+        app:layout_constraintTop_toBottomOf="@+id/per_text"
+        app:layout_constraintLeft_toLeftOf="@+id/per_text"
+        app:layout_constraintRight_toRightOf="@+id/per_text"
+        android:fontFamily="@font/custom_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+5.01%"
+        android:textColor="@color/c_c20000"
+        android:textSize="15dp"
+        />
+
+    <TextView
+        android:id="@+id/date_text"
+        app:layout_constraintRight_toLeftOf="@+id/date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/custom_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="거래일"
+        android:textSize="13dp"
+        />
+
+    <TextView
+        android:id="@+id/date"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/custom_font"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2021.09.17"
+        android:textColor="@color/black"
+
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

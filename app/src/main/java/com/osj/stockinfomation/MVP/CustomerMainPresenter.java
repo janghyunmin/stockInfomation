@@ -17,6 +17,7 @@ import com.osj.stockinfomation.DAO.GetNickNameDAO;
 import com.osj.stockinfomation.DAO.GetPushDetailDAO;
 import com.osj.stockinfomation.DAO.GetPushListDAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAO;
+import com.osj.stockinfomation.DAO.ProfitDAO;
 import com.osj.stockinfomation.DAO.ResultMarketConditionsDAO;
 import com.osj.stockinfomation.DAO.ResultMarketConditionsDAOList;
 import com.osj.stockinfomation.DAO.SetCategoryLikeDAO;
@@ -26,6 +27,7 @@ import com.osj.stockinfomation.DAO.SpotUpDAOCategory2;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory3;
 import com.osj.stockinfomation.DAO.UserDAO;
 import com.osj.stockinfomation.DAO.VersionDAO;
+import com.osj.stockinfomation.DataModel.CloseIndexList;
 import com.osj.stockinfomation.Http.EndpointMain;
 import com.osj.stockinfomation.Http.NSCallback;
 import com.osj.stockinfomation.Http.RetrofitSender2;
@@ -692,22 +694,37 @@ public class CustomerMainPresenter {
             ErrorController.showError(e);
         }
     }
+    public void getProfitList(int date, final CommonCallback.SingleObjectCallback<ProfitDAO> callback) {
+        try{
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getProfitList(date).enqueue(new NSCallback<ProfitDAO>(new NSCallback.SingleObjectCallback<ProfitDAO>() {
+                @Override
+                public void onSuccess(ProfitDAO result) {
+                    if (result.getList()!=null){
+                        callback.onSuccess(result);
+                    }
+                    else{
+                        callback.onFailed("fail..");
+                    }
+
+                }
+
+                @Override
+                public void onFailed(String fault) {
+                    callback.onFailed(fault);
+                }
+            }));
+
+        } catch (Exception e) {
+            ErrorController.showError(e);
+        }
+    }
 
     public void getPushList(final Activity context, String bo_table, final CommonCallback.SingleObjectCallback<GetPushListDAO> callback) {
         try{
             RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getPushList(Util_osj.getAndroidId(context), bo_table).enqueue(new NSCallback<GetPushListDAO>(new NSCallback.SingleObjectCallback<GetPushListDAO>() {
                 @Override
                 public void onSuccess(GetPushListDAO result) {
-//                    Log.e("mb_id" , Util_osj.getAndroidId(context));
-//                    Log.e("bo_Table " , bo_table);
                     if (result.getResultCode().equals("00")){
-//                        Log.e("resultCode : " , result.getResultCode());
-//                        Log.e("getPustList size  : " , String.valueOf(result.getList().size()));
-//                        for(int index = 0; index < result.getList().size(); index++){
-//                            Log.e("getPuId  " , result.getList().get(index).getPuId());
-//                            Log.e("getPuSubject  " , result.getList().get(index).getPuSubject());
-//                            Log.e("getSendDatetime  " , result.getList().get(index).getSendDatetime());
-//                        }
                         callback.onSuccess(result);
                     }
                     else{
@@ -727,6 +744,9 @@ public class CustomerMainPresenter {
             ErrorController.showError(e);
         }
     }
+
+
+
 
     public void getPushDetail(String pu_id, String bo_table, final CommonCallback.SingleObjectCallback<GetPushDetailDAO> callback) {
         try{
@@ -823,4 +843,59 @@ public class CustomerMainPresenter {
             ErrorController.showError(e);
         }
     }
+
+
+    /** jhm 2021-09-28 오전 11:27
+     * 코스피 코스닥 종가
+     ***/
+    public void getCloseIndex(final Activity context, final CommonCallback.SingleObjectCallback<CloseIndexList> callback) {
+        try{
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getCloseIndex().enqueue(new NSCallback<CloseIndexList>(new NSCallback.SingleObjectCallback<CloseIndexList>() {
+                @Override
+                public void onSuccess(CloseIndexList result) {
+                    if (result.getCloseList()!=null)
+                        callback.onSuccess(result);
+                    else
+                        callback.onFailed(result.getResultCode());
+                }
+
+                @Override
+                public void onFailed(String fault) {
+                    callback.onFailed(fault);
+                }
+            }));
+
+        } catch (Exception e) {
+            ErrorController.showError(e);
+        }
+    }
+
+    /** jhm 2021-09-29 오전 10:42
+     * 차트 데이터
+     ***/
+    public void getChartData(final Activity context, final CommonCallback.SingleObjectCallback<CloseIndexList> callback) {
+        try{
+            RetrofitSender2.initAndGetBaseEndPoint(EndpointMain.class).getChartData().enqueue(new NSCallback<CloseIndexList>(new NSCallback.SingleObjectCallback<CloseIndexList>() {
+                @Override
+                public void onSuccess(CloseIndexList result) {
+                    if (result.getCloseList()!=null)
+                        callback.onSuccess(result);
+                    else
+                        callback.onFailed("fail.");
+                }
+
+                @Override
+                public void onFailed(String fault) {
+                    callback.onFailed(fault);
+                }
+            }));
+
+        } catch (Exception e) {
+            ErrorController.showError(e);
+        }
+    }
+
+
+
+
 }

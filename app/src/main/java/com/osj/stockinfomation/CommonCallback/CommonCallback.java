@@ -8,6 +8,15 @@ import java.util.List;
  */
 public class CommonCallback {
 
+    public interface ObjectCallback<T> {
+
+
+        void onFailed(String fault);
+
+        void onSuccess(Object body);
+    }
+
+
     /**
      * 성공 시 특정 오브젝트(T)를 onSuccess를 통해 리턴해준다. 실패하면 원인을 담은 fault 문자열을 onFailed를 통해 리턴해준다.
      *
@@ -18,6 +27,7 @@ public class CommonCallback {
         void onSuccess(T result);
 
         void onFailed(String fault);
+
     }
 
     public interface SingleObjectCallbackForCategory<T> {

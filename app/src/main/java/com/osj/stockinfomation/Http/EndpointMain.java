@@ -13,6 +13,7 @@ import com.osj.stockinfomation.DAO.GetPushDetailDAO;
 import com.osj.stockinfomation.DAO.GetPushListDAO;
 import com.osj.stockinfomation.DAO.GetSearchMainDAO;
 import com.osj.stockinfomation.DAO.IndexDAO;
+import com.osj.stockinfomation.DAO.ProfitDAO;
 import com.osj.stockinfomation.DAO.SetCategoryLikeDAO;
 import com.osj.stockinfomation.DAO.SetLikeDAO;
 import com.osj.stockinfomation.DAO.ResultMarketConditionsDAO;
@@ -21,12 +22,11 @@ import com.osj.stockinfomation.DAO.SpotUpDAOCategory2;
 import com.osj.stockinfomation.DAO.SpotUpDAOCategory3;
 import com.osj.stockinfomation.DAO.Response;
 import com.osj.stockinfomation.DAO.VersionDAO;
+import com.osj.stockinfomation.DataModel.CloseIndexList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -38,6 +38,28 @@ public interface EndpointMain {
      ***/
     @POST("/{marketcode}/index") //코스피 코스닥 지수
     Call<IndexDAO> getIndex(@Query("marketcode") String marketcode);
+
+
+    /** jhm 2021-09-24 오후 4:56
+     * 실시간 수익현황 1~12개월
+     **
+     * @return*/
+    @FormUrlEncoded
+    @POST("/api/get_profit_list.php")
+    Call<ProfitDAO> getProfitList(@Field("date") int date);
+
+     /** jhm 2021-09-28 오전 11:24
+      * 코스피 / 코스닥 종가 정보
+      ***/
+     @POST("api/get_closeIndex.php")
+     Call<CloseIndexList> getCloseIndex();
+
+     /** jhm 2021-09-29 오전 10:42
+      * 차트데이터 활용을 위한 api
+      ***/
+     @POST("api/get_chartdata.php")
+     Call<CloseIndexList> getChartData();
+
 
 
 
