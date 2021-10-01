@@ -112,20 +112,17 @@ public class AdapterMainContentListToday extends NsBaseRecyclerViewAdapter<Adapt
             }
             holder.txt_maincontent_title.setText(item.getWrSubject()); // 아이템 제목
 
-            String db_date = item.getWrDatetime();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date db_today = format.parse(db_date);
+            String db_date = item.getWrDatetime(); // db에 등록되어있는 시간
 
             long now = System.currentTimeMillis();
             Date mDate = new Date(now);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String today = sdf.format(mDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 현재시간
 
 
-            LogUtil.logE("item.getWrDatetime() : " + item.getWrDatetime());
-            LogUtil.logE("today : " + today);
+            LogUtil.logE("db_today : " + db_date);
+            LogUtil.logE("sdf.format(mDate) : " + sdf.format(mDate));
 
-            if(db_today.equals(sdf.format(mDate))){
+            if(db_date.substring(0,10).equals(sdf.format(mDate))){
                 LogUtil.logE("등록일자와 같음 return new");
                 holder.new_icon.setVisibility(View.VISIBLE);
             }else{

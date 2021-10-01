@@ -36,7 +36,6 @@ import com.osj.stockinfomation.Adapter.AdapterGridPage3Category2ContentList;
 import com.osj.stockinfomation.Adapter.AdapterGridPage3ContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainSpotContentList;
-import com.osj.stockinfomation.Adapter.AdapterMainpage3Cagegory2ContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainpage3ContentList;
 import com.osj.stockinfomation.C.C;
 import com.osj.stockinfomation.CommonCallback.CommonCallback;
@@ -58,7 +57,6 @@ import com.osj.stockinfomation.R;
 import com.osj.stockinfomation.activity.BrowserActivity;
 import com.osj.stockinfomation.base.BaseActivity;
 import com.osj.stockinfomation.base.BaseFragment;
-import com.osj.stockinfomation.databinding.FragmentFirst3PageBinding;
 import com.osj.stockinfomation.util.ErrorController;
 import com.osj.stockinfomation.util.LogUtil;
 import com.osj.stockinfomation.util.MessageEvent;
@@ -141,9 +139,9 @@ public class FragmentFirsth3Page extends BaseFragment {
                 @Override
                 public void onRefresh(SwipyRefreshLayoutDirection direction) {
                     if (direction == SwipyRefreshLayoutDirection.TOP) {
-                        loadData(true);
+                        swipeRefreshLayout.setRefreshing(false);
                     } else {
-                        loadData(false);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             });
@@ -194,6 +192,7 @@ public class FragmentFirsth3Page extends BaseFragment {
                                     public void onSuccess(GetContentsViewType2DAO result1) {
                                         hideProgress();
                                         for(int i = 0; i < adapterMainContentList.getData().size(); i++){
+                                            LogUtil.logE("adapterMainContentList.getData().get(i).getWrHit() : " + adapterMainContentList.getData().get(i).getWrHit());
                                             if(adapterMainContentList.getData().get(i).getWrId().equals(result1.getWrId())){
                                                 adapterMainContentList.getData().get(i).setWrHit(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrHit()) + 1));
                                                 adapterMainContentList.notifyDataSetChanged();

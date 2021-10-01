@@ -101,15 +101,8 @@ public class AdapterMainContentList extends NsBaseRecyclerViewAdapter<AdapterMai
         try {
             ResultMarketConditionsDAOList item = data.get(position);
             Glide.with(activity).load(item.getWrFile()).asBitmap().into(holder.iv_maincontent_row);
-            holder.txt_maincontent_title.setText(item.getLabel() + " " + item.getWrSubject());
+            holder.txt_maincontent_title.setText(item.getWrSubject());
 
-            String content = holder.txt_maincontent_title.getText().toString();
-            SpannableString spannableString = new SpannableString(content);
-            String word = item.getLabel();
-            int start = content.indexOf(word);
-            int end = start + word.length();
-            spannableString.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            holder.txt_maincontent_title.setText(spannableString);
 
             if(!item.getWrLike().isEmpty())
                 holder.txt_maincontent_fav_count.setText(item.getWrLike());

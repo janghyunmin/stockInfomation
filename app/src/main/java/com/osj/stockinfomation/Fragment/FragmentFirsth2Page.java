@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.osj.stockinfomation.Adapter.AdapterMainContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainContentListToday;
 import com.osj.stockinfomation.Adapter.AdapterMainSpotContentList;
 import com.osj.stockinfomation.Adapter.AdapterMainpage4ContentList;
@@ -313,46 +312,49 @@ public class FragmentFirsth2Page extends BaseFragment {
 
 //        Glide.with(activity).load(result.getWrFile()).asBitmap().into(iv_first1_profile);
 
-        if (result.getLikeCheck().toLowerCase().equals("n"))
-            iv_first1_fav.setBackgroundResource(R.drawable.fav_off);
-        else
-            iv_first1_fav.setBackgroundResource(R.drawable.fav_on);
-
-        iv_first1_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.setLike(activity, result.getWrId(), result.getBoTable(), new CommonCallback.SingleObjectCallback<SetLikeDAO>() {
-                    @Override
-                    public void onSuccess(SetLikeDAO result1) {
-                        String message = "";
-                        if (result1.getWrLike().toLowerCase().equals("n")) {
-                            message = getString(R.string.page1_fav_off);
-                            iv_first1_fav.setBackgroundResource(R.drawable.fav_off);
-                        } else {
-                            message = getString(R.string.page1_fav_on);
-                            iv_first1_fav.setBackgroundResource(R.drawable.fav_on);
-                        }
-
-                        for(int i = 0; i < adapterMainContentList.getData().size(); i++){
-                            if(adapterMainContentList.getData().get(i).getWrId().equals(result.getWrId())){
-                                adapterMainContentList.getData().get(i).setLikeCheck(result1.getWrLike());
-                                if (result1.getWrLike().toLowerCase().equals("n"))
-                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) - 1));
-                                else
-                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) + 1));
-                            }
-                        }
-                        adapterMainContentList.notifyDataSetChanged();
-                        showCustomAlert(activity, message, getString(R.string.page1_fav_subtitle), false, R.drawable.img_alert_error, 1, "", "", null, null);
-                    }
-
-                    @Override
-                    public void onFailed(String fault) {
-                        showCustomAlert(activity, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
-                    }
-                });
-            }
-        });
+        /** jhm 2021-09-30 오후 2:27 
+         * 즐겨찾기 해제
+         ***/
+//        if (result.getLikeCheck().toLowerCase().equals("n"))
+//            iv_first1_fav.setBackgroundResource(R.drawable.fav_off);
+//        else
+//            iv_first1_fav.setBackgroundResource(R.drawable.fav_on);
+//
+//        iv_first1_fav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPresenter.setLike(activity, result.getWrId(), result.getBoTable(), new CommonCallback.SingleObjectCallback<SetLikeDAO>() {
+//                    @Override
+//                    public void onSuccess(SetLikeDAO result1) {
+//                        String message = "";
+//                        if (result1.getWrLike().toLowerCase().equals("n")) {
+//                            message = getString(R.string.page1_fav_off);
+//                            iv_first1_fav.setBackgroundResource(R.drawable.fav_off);
+//                        } else {
+//                            message = getString(R.string.page1_fav_on);
+//                            iv_first1_fav.setBackgroundResource(R.drawable.fav_on);
+//                        }
+//
+//                        for(int i = 0; i < adapterMainContentList.getData().size(); i++){
+//                            if(adapterMainContentList.getData().get(i).getWrId().equals(result.getWrId())){
+//                                adapterMainContentList.getData().get(i).setLikeCheck(result1.getWrLike());
+//                                if (result1.getWrLike().toLowerCase().equals("n"))
+//                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) - 1));
+//                                else
+//                                    adapterMainContentList.getData().get(i).setWrLike(String.valueOf(Integer.parseInt(adapterMainContentList.getData().get(i).getWrLike()) + 1));
+//                            }
+//                        }
+//                        adapterMainContentList.notifyDataSetChanged();
+//                        showCustomAlert(activity, message, getString(R.string.page1_fav_subtitle), false, R.drawable.img_alert_error, 1, "", "", null, null);
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String fault) {
+//                        showCustomAlert(activity, "", fault, true, R.drawable.img_alert_error, 1, "", "", null, null);
+//                    }
+//                });
+//            }
+//        });
 
         String[] arrStr = result.getWrDatetime().split(" ");
 
@@ -361,7 +363,8 @@ public class FragmentFirsth2Page extends BaseFragment {
         else
             txt_first1_date.setText(result.getWrDatetime());
 
-        txt_first1_name.setText(result.getWrName());
+        //txt_first1_name.setText(result.getWrName());
+        txt_first1_name.setText("고수TV");
         txt_first1_like_count.setText(result.getWrLike());
         txt_first1_view_count.setText(result.getWrHit());
         txt_first1_title.setText(result.getWrSubject());

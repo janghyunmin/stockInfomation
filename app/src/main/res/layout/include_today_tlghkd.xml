@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
+    <!-- 오늘시황 item onclick 시 나오는 화면 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,7 +38,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:scaleType="centerCrop"
-                        android:background="@drawable/img_profile"
+                        android:background="@drawable/admin"
                         >
 
                     </ImageView>
@@ -55,12 +56,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="11sp"
-                            ></TextView>
+                            android:fontFamily="@font/custom_font"
+                            android:textColor="@color/black"
+                            android:text=""
+                            />
 
                         <TextView
                             android:id="@+id/txt_first1_name"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/custom_font"
+                            android:textColor="@color/black"
+                            android:text=""
+                            >
 
                         </TextView>
                     </LinearLayout>
@@ -72,6 +80,7 @@
                         android:background="@drawable/fav_on"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:visibility="gone"
                         android:layout_marginRight="10dp">
 
                     </ImageView>
@@ -81,12 +90,14 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="3dp"
                     android:background="#e5e5e5"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:paddingBottom="10dp"
@@ -95,25 +106,29 @@
                     android:paddingTop="25dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/img_view_count"/>
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:background="@drawable/research"/>
 
                     <TextView
                         android:id="@+id/txt_first1_view_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/custom_font"
                         android:layout_marginLeft="5dp"
                         android:textSize="11sp"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:background="@drawable/img_fav_count"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/txt_first1_like_count"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -125,6 +140,9 @@
                     android:id="@+id/txt_first1_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/custom_font"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:padding="10dp">
@@ -133,6 +151,7 @@
 
                 <com.osj.stockinfomation.util.HTMLTextView
                     android:id="@+id/txt_first1_page"
+                    android:fontFamily="@font/custom_font"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"

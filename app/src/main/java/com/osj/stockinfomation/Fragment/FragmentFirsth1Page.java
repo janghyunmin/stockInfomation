@@ -666,7 +666,6 @@ public class FragmentFirsth1Page extends BaseFragment {
      ***/
     public void gridKospi(){
 
-        Collections.reverse(dateList);
         XAxis xAxis = binding.lineChartKospi.getXAxis();
         xAxis.setDrawLabels(false);
         xAxis.setDrawAxisLine(false);
@@ -738,7 +737,7 @@ public class FragmentFirsth1Page extends BaseFragment {
 
     public void gridKosdaq(){
 
-        Collections.reverse(dateList);
+
         XAxis xAxis1 = binding.lineChartKosdaq.getXAxis();
         xAxis1.setDrawLabels(false);
         xAxis1.setDrawAxisLine(false);

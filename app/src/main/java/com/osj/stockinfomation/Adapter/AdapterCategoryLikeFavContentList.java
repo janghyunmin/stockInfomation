@@ -120,9 +120,7 @@ public class AdapterCategoryLikeFavContentList extends NsBaseRecyclerViewAdapter
         public ItemViewHolder(@NonNull View view) {
             super(view);
 
-            iv_spot_content_star = (ImageView)view.findViewById(R.id.iv_spot_content_star);
             txt_spot_content_title = (TextView)view.findViewById(R.id.txt_spot_content_title);
-            iv_spot_content_delete = (ImageView)view.findViewById(R.id.iv_spot_content_delete);
             txt_spot_content_price = (TextView)view.findViewById(R.id.txt_spot_content_price);
             txt_spot_content_per = (TextView)view.findViewById(R.id.txt_spot_content_per);
             txt_spot_content_more = (TextView)view.findViewById(R.id.txt_spot_content_more);
