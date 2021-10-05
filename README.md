@@ -28,11 +28,13 @@
 
 ----
 
+   <del>git clone ssh://gosutv-aos@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv-aos.git</del>
+    <del>git clone ssh://gosutv@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv.git</del>
+
 <h3>gosu app android git clone</h3>
    
 
-    <del>git clone ssh://gosutv-aos@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv-aos.git</del>
-    <del>git clone ssh://gosutv@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv.git</del>
+    
       https://github.com/janghyunmin/stockInfomation.git
       git@github.com:janghyunmin/stockInfomation.git
 ----
