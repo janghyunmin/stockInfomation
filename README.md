@@ -30,9 +30,9 @@
 <h3>gosu app android git clone</h3>
 
     
-      <br>https://github.com/janghyunmin/stockInfomation.git</br>
-      <br>git@github.com:janghyunmin/stockInfomation.git</br>
-      
+      https://github.com/janghyunmin/stockInfomation.git
+      git@github.com:janghyunmin/stockInfomation.git
+    
       
       
 ----
