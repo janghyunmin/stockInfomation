@@ -31,8 +31,8 @@
 <h3>gosu app android git clone</h3>
    
 
-    <!-- git clone ssh://gosutv-aos@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv-aos.git -->
-    <!-- git clone ssh://gosutv@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv.git -->
+    \\<!-- git clone ssh://gosutv-aos@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv-aos.git -->
+    \\<!-- git clone ssh://gosutv@aidenhome.iptime.org:9882/volume1/igrev-dev/gosutv.git -->
       https://github.com/janghyunmin/stockInfomation.git
       git@github.com:janghyunmin/stockInfomation.git
 ----
