@@ -1,4 +1,4 @@
-# Gosu App :fire: :rocket:
+# 고수의 급등주 V1.0.0
 
 
 <!-- [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
