@@ -40,7 +40,7 @@
 
 <h3> Contact </h3>
 :iphone: 010 - 5052 - 2670  &nbsp </br>
-:email: gusals456@notstopthem.com  &nbsp 
+:email: gusals456@naver.com  &nbsp 
 
 
 
